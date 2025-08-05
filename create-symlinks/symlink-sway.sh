@@ -1,3 +1,4 @@
+
 #!/usr/bin/bash
 
 set -a
@@ -7,8 +8,8 @@ set +a
 
 # echo "$DOT_PATH"
 
-target="$HOME/.bashrc"
-source="$DOT_PATH/.bashrc"
+target="$HOME/.config/sway/config"
+source="$DOT_PATH/.config/sway/config"
 
 # Confirm before deletion
 read -p "This will delete '$target'. Proceed? [y/N]: " confirm

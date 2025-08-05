@@ -1,11 +1,14 @@
 -- SINGLE FILE NEOVIM CONFIG
 
+
 -- WAJIB: lazy.nvim, mason, treesitter, harpoon, oil, fzf, rg
 
 -- require("lazy_pycpp_v1")
 -- require("lazy_pycpp_v2")
 -- require("lazy_pycpp_v3")
-require("lazy_pycpp_v4")
+-- require("lazy_pycpp_v4")
+--
+require("lazy_jsx_frontend")
 
 -- require("lazy_ergonomic1")
 -- require("lazy_ergonomic2")
@@ -50,3 +53,15 @@ vim.opt.clipboard = "unnamedplus" -- clipboard support
 vim.o.wrap = true -- Enable line wrapping
 vim.o.textwidth = 80 -- Optional: Set max text width for formatting
 vim.o.colorcolumn = "+1" -- Optional: Add a vertical guideline
+
+
+
+-- require("theme_paperlike").setup()
+-- require("theme_paperlike_dark").setup()
+
+-- vim.cmd("colorscheme paperlike")
+
+vim.o.termguicolors = true
+
+-- require("theme_paperlike_day").setup()
+require("theme_paperlike_night").setup()

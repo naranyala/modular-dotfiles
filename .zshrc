@@ -108,7 +108,7 @@ alias vcpkg='/media/naranyala/Data/diskd-binaries/vcpkg/vcpkg'
 alias goto-pkg-vcpkg='cd /media/naranyala/Data/diskd-binaries/vcpkg/packages'
 # alias goto-pkg-usr='cd /usr/local/include/'
 
-alias goto-md-work='cd /media/naranyala/Data/OLAHMARKDOWN-vault-work'
+alias goto-md-work='cd /run/media/root/Data/OLAHMARKDOWN-vault-work'
 alias goto-d-bin='cd /media/naranyala/Data/diskd-binaries'
 
 alias goto-ex-usrlocal='cd /usr/local/bin'

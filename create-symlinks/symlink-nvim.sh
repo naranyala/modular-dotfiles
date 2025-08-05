@@ -1,7 +1,13 @@
 #!/usr/bin/bash
 
+set -a
+source .env
+set +a
+
+# echo "$DOT_PATH"
+
 target="$HOME/.config/nvim"
-source="$HOME/modular-dotfiles/nvim"
+source="$DOT_PATH/nvim"
 
 # Confirm before deletion
 read -p "This will delete '$target'. Proceed? [y/N]: " confirm

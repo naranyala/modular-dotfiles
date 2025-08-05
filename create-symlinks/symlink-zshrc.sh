@@ -1,9 +1,14 @@
 
-
 #!/usr/bin/bash
 
+set -a
+source .env
+set +a
+
+# echo "$DOT_PATH"
+
 target="$HOME/.zshrc"
-source="$HOME/modular-dotfiles/.zshrc"
+source="$DOT_PATH/.zshrc"
 
 # Confirm before deletion
 read -p "This will delete '$target'. Proceed? [y/N]: " confirm

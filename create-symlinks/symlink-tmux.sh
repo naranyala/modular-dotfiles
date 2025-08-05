@@ -1,8 +1,14 @@
 
 #!/usr/bin/bash
 
+set -a
+source .env
+set +a
+
+# echo "$DOT_PATH"
+
 target="$HOME/.tmux.conf"
-source="$HOME/modular-dotfiles/.tmux.conf"
+source="$DOT_PATH/.tmux.conf"
 
 # Confirm before deletion
 read -p "This will delete '$target'. Proceed? [y/N]: " confirm
