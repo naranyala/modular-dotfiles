@@ -65,3 +65,5 @@ vim.o.termguicolors = true
 
 -- require("theme_paperlike_day").setup()
 require("theme_paperlike_night").setup()
+
+

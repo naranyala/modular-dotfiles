@@ -158,3 +158,11 @@ export PKG_CONFIG_PATH=/usr/lib/pkgconfig:/usr/share/pkgconfig
 # bun completions
 [ -s "/home/naranyala/.bun/_bun" ] && source "/home/naranyala/.bun/_bun"
 export PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig
+
+if [ -e /home/naranyala/.nix-profile/etc/profile.d/nix.sh ]; then . /home/naranyala/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+
+# 🚀 Auto-launch nix-shell as default shell
+if [[ -z "$IN_NIX_SHELL" && -f "/home/naranyala/.default-nix-shell.nix" ]]; then
+  export IN_NIX_SHELL=1
+  exec nix-shell "/home/naranyala/.default-nix-shell.nix"
+fi

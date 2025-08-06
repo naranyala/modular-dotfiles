@@ -30,7 +30,8 @@ exec_always sway-alttab
 bindsym Mod4+Tab exec sway-alttab
 
 # Default programs
-set $term foot
+# set $term foot
+set $term kitty
 set $menu wofi --show drun
 
 # Key bindings
