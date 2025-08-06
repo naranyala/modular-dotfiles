@@ -9,7 +9,8 @@ set +a
 # echo "$DOT_PATH"
 
 target="$HOME/shell.nix"
-source="$DOT_PATH/shell.nix"
+# source="$DOT_PATH/shell.nix"
+source="$HOME/projects-remote/modular-dotfiles/shell.nix"
 
 # Confirm before deletion
 read -p "This will delete '$target'. Proceed? [y/N]: " confirm
