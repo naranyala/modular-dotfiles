@@ -167,4 +167,4 @@ if [[ -z "$IN_NIX_SHELL" && -f "/home/naranyala/.shell.nix" ]]; then
   exec nix-shell "/home/naranyala/shell.nix"
 fi
 
-
+export PKG_CONFIG=/usr/bin/pkg-config
