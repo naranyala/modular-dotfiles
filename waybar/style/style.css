@@ -1,0 +1,28 @@
+/* Waybar style */
+* {
+  font-family: "JetBrainsMono Nerd Font", monospace;
+  font-size: 13px;
+  min-height: 0;
+}
+
+window {
+  background-color: rgba(0 0 0 0.5);
+  border-bottom: 2px solid #89b4fa;
+}
+
+#clock {
+  color: #cdd6f4;
+  padding: 0 10px;
+}
+
+#battery {
+  color: #a6e3a1;
+}
+
+#network {
+  color: #f9e2af;
+}
+
+#pulseaudio {
+  color: #f38ba8;
+}

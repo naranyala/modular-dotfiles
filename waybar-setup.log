@@ -1,0 +1,32 @@
+[2025-08-07 09:16:38] 🚀 Starting Waybar setup...
+[2025-08-07 09:16:38] 📁 Created: /home/naranyala/projects-remote/modular-dotfiles/waybar/config
+[2025-08-07 09:16:38] 📁 Created: /home/naranyala/projects-remote/modular-dotfiles/waybar/style
+[2025-08-07 09:16:38] 📁 Created: /home/naranyala/projects-remote/modular-dotfiles/waybar/scripts
+[2025-08-07 09:16:38] 🔍 Checking required programs...
+[2025-08-07 09:16:38] ✅ Found: waybar
+[2025-08-07 09:16:38] ✅ Found: swaymsg
+[2025-08-07 09:16:38] ✅ Found: jq
+[2025-08-07 09:16:38] ✅ Found: date
+[2025-08-07 09:16:38] ✅ Found: uptime
+[2025-08-07 09:16:38] 📝 Generated Waybar config
+[2025-08-07 09:16:38] 🎨 Generated Waybar style
+[2025-08-07 09:16:38] 🔧 Created uptime script
+[2025-08-07 09:16:38] 🔗 Linking Waybar config to /home/naranyala/.config...
+[2025-08-07 09:16:38] ⚠️  Skipped symlink: /home/naranyala/.config/waybar exists and is not a symlink
+[2025-08-07 09:16:38] ✅ Waybar setup complete!
+[2025-08-07 09:18:11] 🚀 Starting Waybar setup...
+[2025-08-07 09:18:11] 📁 Created: /home/naranyala/projects-remote/modular-dotfiles/waybar/config
+[2025-08-07 09:18:11] 📁 Created: /home/naranyala/projects-remote/modular-dotfiles/waybar/style
+[2025-08-07 09:18:11] 📁 Created: /home/naranyala/projects-remote/modular-dotfiles/waybar/scripts
+[2025-08-07 09:18:11] 🔍 Checking required programs...
+[2025-08-07 09:18:11] ✅ Found: waybar
+[2025-08-07 09:18:11] ✅ Found: swaymsg
+[2025-08-07 09:18:11] ✅ Found: jq
+[2025-08-07 09:18:11] ✅ Found: date
+[2025-08-07 09:18:11] ✅ Found: uptime
+[2025-08-07 09:18:11] 📝 Generated Waybar config
+[2025-08-07 09:18:11] 🎨 Generated Waybar style
+[2025-08-07 09:18:11] 🔧 Created uptime script
+[2025-08-07 09:18:11] 🔗 Linking Waybar config to /home/naranyala/.config...
+[2025-08-07 09:18:12] ⚠️  Skipped symlink: /home/naranyala/.config/waybar exists and is not a symlink
+[2025-08-07 09:18:12] ✅ Waybar setup complete!

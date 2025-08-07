@@ -385,4 +385,8 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
-
+vim.keymap.set("n", "<leader>td", function()
+  local datetime = os.date("%Y-%m-%d %H:%M:%S")
+  local todo = "TODO (" .. datetime .. ") "
+  vim.api.nvim_put({todo}, "c", true, true)
+end, { desc = "Insert TODO with timestamp" })

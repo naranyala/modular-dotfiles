@@ -1,0 +1,19 @@
+/* Waybar config */
+{
+  "layer": "top",
+  "position": "top",
+  "height": 30,
+  "modules-left": ["sway/workspaces", "sway/mode"],
+  "modules-center": ["clock"],
+  "modules-right": ["custom/uptime", "custom/hostname", "battery", "network", "pulseaudio"],
+  "custom/uptime": {
+    "exec": "/home/naranyala/.config/waybar/scripts/uptime.sh",
+    "interval": 60,
+    "tooltip": false
+  },
+  "custom/hostname": {
+    "exec": "hostname",
+    "interval": 300,
+    "tooltip": false
+  }
+}

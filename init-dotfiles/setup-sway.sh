@@ -48,7 +48,7 @@ EOF
 cat <<EOF > "$DOTFILES_DIR/waybar/config/config.jsonc"
 /* Waybar config starter */
 {
-  "layer": "top",
+  "layer": "bottom",
   "modules-left": ["sway/workspaces"],
   "modules-center": ["clock"],
   "modules-right": ["battery", "network"]
