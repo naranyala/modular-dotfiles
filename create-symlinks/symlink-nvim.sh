@@ -7,7 +7,7 @@ set +a
 # echo "$DOT_PATH"
 
 target="$HOME/.config/nvim"
-source="$DOT_PATH/nvim"
+source="$DOT_PATH/.config/nvim"
 
 # Confirm before deletion
 read -p "This will delete '$target'. Proceed? [y/N]: " confirm

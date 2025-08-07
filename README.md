@@ -1,5 +1,5 @@
 
-# momdular-dotfiles
+# modular-dotfiles
 
 ## sway
 

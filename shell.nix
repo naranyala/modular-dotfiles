@@ -5,17 +5,26 @@ pkgs.mkShell {
   buildInputs = [ 
     pkgs.git 
     pkgs.bash
+    pkgs.bashInteractive
     pkgs.starship 
   ];
 
   shellHook = ''
+    ## load .env
+    ENV_PATH=~/projects-remote/modular-dotfiles/.env
+
+    set -a
+    source $ENV_PATH
+    set +a
+    echo "✅ Loaded .env variables"
+
     ## autorun
     eval "$(starship init bash)"
 
     ## aliases
     alias gs='git status'
     alias ll='ls -l --color=auto'
-    alias md2pdf='bun run /run/media/root/Data/diskd-bun-script/dotfiles/scripts-js/convert-markdown2pdf-batch.js'
+    alias md2pdf="bun run $DISKD_SCRIPT_DIR/convert-markdown2pdf-batch.js"
 
 
     ## git-aware

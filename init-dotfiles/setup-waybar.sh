@@ -3,7 +3,7 @@
 set -euo pipefail
 
 # === Configurable Variables ===
-DOTFILES_DIR="$HOME/projects-remote/modular-dotfiles"
+DOTFILES_DIR="$HOME/projects-remote/modular-dotfiles/.config"
 CONFIG_DIR="$HOME/.config"
 WAYBAR_DIR="$DOTFILES_DIR/waybar"
 LOG_FILE="$DOTFILES_DIR/waybar-setup.log"
@@ -46,7 +46,7 @@ cat <<EOF > "$WAYBAR_DIR/config/config.jsonc"
   "layer": "top",
   "position": "top",
   "height": 30,
-  "modules-left": ["sway/workspaces", "sway/mode"],
+  "modules-left": ["custom/my_toggle", "sway/workspaces", "sway/mode"],
   "modules-center": ["clock"],
   "modules-right": ["custom/uptime", "custom/hostname", "battery", "network", "pulseaudio"],
   "custom/uptime": {
@@ -58,10 +58,18 @@ cat <<EOF > "$WAYBAR_DIR/config/config.jsonc"
     "exec": "hostname",
     "interval": 300,
     "tooltip": false
+  },
+  "custom/my_toggle": {
+    "exec": "echo 'power_menu'",
+    "interval": 1,
+    "on-click": "$CONFIG_DIR/waybar/scripts/power_menu.sh",
+    "tooltip": false,
+    "format": " {}"
   }
 }
 EOF
 log "📝 Generated Waybar config"
+
 
 # === Generate Waybar Style ===
 cat <<EOF > "$WAYBAR_DIR/style/style.css"
@@ -103,6 +111,14 @@ uptime -p | sed 's/up //'
 EOF
 chmod +x "$WAYBAR_DIR/scripts/uptime.sh"
 log "🔧 Created uptime script"
+
+# === Generate Custom Script: uptime.sh ===
+cat <<'EOF' > "$WAYBAR_DIR/scripts/power_menu.sh"
+#!/usr/bin/env bash
+uv run ~/projects-remote/python-code-exploration/pyray-rxpy/rx_power_menu.py
+EOF
+chmod +x "$WAYBAR_DIR/scripts/power_menu.sh"
+log "🔧 Created power_menu script"
 
 # === Symlink to ~/.config ===
 log "🔗 Linking Waybar config to $CONFIG_DIR..."

@@ -1,18 +1,14 @@
 
 #!/usr/bin/bash
 
-ENV_PATH=~/projects-remote/modular-dotfiles/.env
-
 set -a
-source "$ENV_PATH"
+source .env
 set +a
-
 
 # echo "$DOT_PATH"
 
-target="$HOME/shell.nix"
-# source="$DOT_PATH/shell.nix"
-source="$HOME/projects-remote/modular-dotfiles/shell.nix"
+target="$HOME/.config/waybar"
+source="$DOT_PATH/.config/waybar"
 
 # Confirm before deletion
 read -p "This will delete '$target'. Proceed? [y/N]: " confirm
@@ -23,4 +19,3 @@ if [[ "$confirm" =~ ^[Yy]$ ]]; then
 else
     echo "Operation cancelled."
 fi
-

@@ -3,7 +3,7 @@
   "layer": "top",
   "position": "top",
   "height": 30,
-  "modules-left": ["sway/workspaces", "sway/mode"],
+  "modules-left": ["custom/my_toggle", "sway/workspaces", "sway/mode"],
   "modules-center": ["clock"],
   "modules-right": ["custom/uptime", "custom/hostname", "battery", "network", "pulseaudio"],
   "custom/uptime": {
@@ -15,5 +15,12 @@
     "exec": "hostname",
     "interval": 300,
     "tooltip": false
+  },
+  "custom/my_toggle": {
+    "exec": "echo 'power_menu'",
+    "interval": 1,
+    "on-click": "/home/naranyala/.config/waybar/scripts/power_menu.sh",
+    "tooltip": false,
+    "format": " {}"
   }
 }
