@@ -43,7 +43,7 @@ cat <<EOF > "$DOTFILES_DIR/sway/config"
 set \$mod Mod4
 
 # Launch terminal
-bindsym \$mod+Return exec alacritty
+bindsym \$mod+Return exec foot -L nix-shell
 
 # Close window
 bindsym \$mod+Shift+q kill

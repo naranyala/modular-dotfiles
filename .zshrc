@@ -108,7 +108,21 @@ alias vcpkg='/media/naranyala/Data/diskd-binaries/vcpkg/vcpkg'
 alias goto-pkg-vcpkg='cd /media/naranyala/Data/diskd-binaries/vcpkg/packages'
 # alias goto-pkg-usr='cd /usr/local/include/'
 
-alias goto-md-work='cd /run/media/root/Data/OLAHMARKDOWN-vault-work'
+
+setup_md_aliases() {
+    if [ -d "$HOME/actioni" ]; then
+        alias goto-md-work='cd /run/media/root/Data/OLAHMARKDOWN-vault-work'
+    else
+        alias goto-md-work='cd /media/naranyala/Data/OLAHMARKDOWN-vault-work'
+    fi
+}
+
+setup_md_aliases
+
+# alias goto-md-work='cd /run/media/root/Data/OLAHMARKDOWN-vault-work'
+# alias goto-md-work='cd /media/naranyala/Data/OLAHMARKDOWN-vault-work'
+#
+#
 alias goto-d-bin='cd /media/naranyala/Data/diskd-binaries'
 
 alias goto-ex-usrlocal='cd /usr/local/bin'
@@ -124,6 +138,7 @@ alias goto-exe-apt='cd /usr/include'
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
+
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
@@ -131,7 +146,19 @@ export NVM_DIR="$HOME/.nvm"
 export LIBRARY_PATH=/path/to/glfw/lib:$LIBRARY_PATH
 export LD_LIBRARY_PATH=/path/to/glfw/lib:$LD_LIBRARY_PATH
 
-export PATH="/media/naranyala/Data/diskd-binaries/kotlin-native/bin:$PATH"
+
+
+setup_kotlin_aliases() {
+    if [ -d "$HOME" ]; then
+        export PATH="/media/naranyala/Data/diskd-binaries/kotlin-native/bin:$PATH"
+    else
+        export PATH="/run/media/root/Data/diskd-binaries/kotlin-native/bin:$PATH"
+    fi
+}
+
+setup_kotlin_aliases
+
+
 export PATH="/media/naranyala/Data/diskd-binaries/vcpkg:$PATH"
 export PATH="/snap/bin:$PATH"
 
@@ -168,3 +195,5 @@ if [[ -z "$IN_NIX_SHELL" && -f "/home/naranyala/.shell.nix" ]]; then
 fi
 
 export PKG_CONFIG=/usr/bin/pkg-config
+
+

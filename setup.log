@@ -10,3 +10,15 @@
 [2025-08-07 09:16:48] 🔗 Linking Sway config to /home/naranyala/.config...
 [2025-08-07 09:16:48] ⚠️  Skipped symlink: /home/naranyala/.config/sway exists and is not a symlink
 [2025-08-07 09:16:48] ✅ Sway setup complete!
+[2025-08-08 00:16:23] 🚀 Starting Sway-only setup...
+[2025-08-08 00:16:23] 📁 Created: /home/naranyala/projects-remote/modular-dotfiles/sway
+[2025-08-08 00:16:23] 🔍 Checking required programs...
+[2025-08-08 00:16:23] ✅ Found: sway
+[2025-08-08 00:16:23] ✅ Found: alacritty
+[2025-08-08 00:16:23] ✅ Found: swaybg
+[2025-08-08 00:16:23] ❌ Missing: pactl — consider installing it
+[2025-08-08 00:16:23] ✅ Found: brightnessctl
+[2025-08-08 00:16:23] 📝 Generated Sway config
+[2025-08-08 00:16:23] 🔗 Linking Sway config to /home/naranyala/.config...
+[2025-08-08 00:16:23] ⚠️  Skipped symlink: /home/naranyala/.config/sway exists and is not a symlink
+[2025-08-08 00:16:23] ✅ Sway setup complete!

@@ -385,8 +385,46 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+-- TODO with datetime
 vim.keymap.set("n", "<leader>td", function()
   local datetime = os.date("%Y-%m-%d %H:%M:%S")
   local todo = "TODO (" .. datetime .. ") "
   vim.api.nvim_put({todo}, "c", true, true)
 end, { desc = "Insert TODO with timestamp" })
+
+
+-- Auto-clear search highlight and enhance search UX
+local function clear_search()
+  if vim.v.hlsearch == 1 then
+    vim.cmd("nohlsearch")
+    -- Optional: show subtle feedback
+    vim.notify("Search cleared", vim.log.levels.DEBUG, { title = "Neovim" })
+  end
+end
+
+-- Clear on cursor move
+vim.api.nvim_create_autocmd("CursorMoved", {
+  callback = clear_search,
+})
+
+-- Clear on insert mode entry
+vim.api.nvim_create_autocmd("InsertEnter", {
+  callback = clear_search,
+})
+
+-- Clear after leaving search command line
+vim.api.nvim_create_autocmd("CmdlineLeave", {
+  pattern = "[/?]",
+  callback = function()
+    vim.defer_fn(clear_search, 100)
+  end,
+})
+
+-- Smart <Esc> to clear search manually
+vim.keymap.set("n", "<Esc>", function()
+  if vim.v.hlsearch == 1 then
+    vim.cmd("nohlsearch")
+  else
+    vim.cmd("echo ''") -- avoid flicker
+  end
+end, { silent = true, desc = "Clear search highlight" })

@@ -5,17 +5,17 @@ my four package manager with examples
 
 ```bash 
 
-# install terminal (main repo)
+# main repo
 sudo apt install foot
 
-# install multiplexer (alt repo)
+# alt repo
 brew install tmux
 
-# install js runtime (bleeding-edge repo)
+# bleeding-edge repo
 nix-shell -p bun
 
-# install package (web repo)
-> bun i md-to-pdf
+# web repo
+bun i -g md-to-pdf
 
 ```
 

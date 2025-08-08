@@ -26,7 +26,7 @@ write_config() {
 
   cat > "$INI_FILE" <<EOF
 [main]
-shell = /bin/bash
+shell = ~/.nix-profile/bin/nix-shell
 term = xterm-256color
 font = CascadiaMono:size=12
 
