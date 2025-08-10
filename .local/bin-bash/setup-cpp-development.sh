@@ -41,6 +41,7 @@ PACKAGES=(
     graphviz
 )
 
+
 if ! apt install -y "${PACKAGES[@]}" 2>/dev/null; then
     error "Failed to install required packages. Check your internet connection or package sources."
 fi

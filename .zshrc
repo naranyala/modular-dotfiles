@@ -110,10 +110,10 @@ alias goto-pkg-vcpkg='cd /media/naranyala/Data/diskd-binaries/vcpkg/packages'
 
 
 setup_md_aliases() {
-    if [ -d "$HOME/actioni" ]; then
-        alias goto-md-work='cd /run/media/root/Data/OLAHMARKDOWN-vault-work'
-    else
+    if [ -d "$HOME" ]; then
         alias goto-md-work='cd /media/naranyala/Data/OLAHMARKDOWN-vault-work'
+    else
+        alias goto-md-work='cd /run/media/root/Data/OLAHMARKDOWN-vault-work'
     fi
 }
 
@@ -197,3 +197,12 @@ fi
 export PKG_CONFIG=/usr/bin/pkg-config
 
 
+
+# pnpm
+export PNPM_HOME="/home/naranyala/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+export PATH="$PNPM_HOME:$PATH"

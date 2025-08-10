@@ -2,7 +2,8 @@
 
 # Get current user
 USER_NAME=$(whoami)
-MOUNT_BASE="/run/media/$USER_NAME"
+# MOUNT_BASE="/run/media/$USER_NAME"
+MOUNT_BASE="/media/$USER_NAME"
 
 # Create mount base if it doesn't exist
 mkdir -p "$MOUNT_BASE"
