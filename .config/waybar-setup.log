@@ -1,0 +1,17 @@
+[2025-08-11 10:29:23] 🚀 Starting Waybar setup...
+[2025-08-11 10:29:23] 📁 Created: /home/naranyala/projects-remote/modular-dotfiles/.config/waybar/config
+[2025-08-11 10:29:23] 📁 Created: /home/naranyala/projects-remote/modular-dotfiles/.config/waybar/style
+[2025-08-11 10:29:23] 📁 Created: /home/naranyala/projects-remote/modular-dotfiles/.config/waybar/scripts
+[2025-08-11 10:29:23] 🔍 Checking required programs...
+[2025-08-11 10:29:23] ✅ Found: waybar
+[2025-08-11 10:29:23] ✅ Found: swaymsg
+[2025-08-11 10:29:23] ✅ Found: jq
+[2025-08-11 10:29:23] ✅ Found: date
+[2025-08-11 10:29:23] ✅ Found: uptime
+[2025-08-11 10:29:23] 📝 Generated Waybar config
+[2025-08-11 10:29:23] 🎨 Generated Waybar style
+[2025-08-11 10:29:23] 🔧 Created uptime script
+[2025-08-11 10:29:23] 🔧 Created power_menu script
+[2025-08-11 10:29:23] 🔗 Linking Waybar config to /home/naranyala/.config...
+[2025-08-11 10:29:23] 🔗 Linked: /home/naranyala/projects-remote/modular-dotfiles/.config/waybar → /home/naranyala/.config/waybar
+[2025-08-11 10:29:23] ✅ Waybar setup complete!

@@ -1,11 +1,10 @@
 #!/usr/bin/bash
 
-set -a
-source .env
-set +a
-
-
+# set -a
+# source .env
+# set +a
 # echo "$DOT_PATH"
+DOT_PATH="$HOME/project-remote/modular-dotfiles"
 
 target="$HOME/.bashrc"
 source="$DOT_PATH/.bashrc"

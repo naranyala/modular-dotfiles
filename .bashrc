@@ -1,1 +1,24 @@
-/home/naranyala/projects-remote/modular-dotfiles/.bashrc
+
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+# Created by `pipx` on 2025-07-15 16:10:52
+export PATH="$PATH:/home/naranyala/.local/bin"
+export PATH="$HOME/.cargo/bin:$PATH"
+export PKG_CONFIG_PATH=/path/to/pkgconfig:$PKG_CONFIG_PATH
+
+# eval /usr/bin/zsh
+eval /home/linuxbrew/.linuxbrew/bin/nu
+
+# pnpm
+export PNPM_HOME="/home/naranyala/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+export PATH="$PNPM_HOME:$PATH"
+
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

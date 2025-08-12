@@ -47,6 +47,7 @@ vim.keymap.set('n', '<C-h>', '<C-w>h')
 vim.keymap.set('n', '<C-j>', '<C-w>j')
 vim.keymap.set('n', '<C-k>', '<C-w>k')
 vim.keymap.set('n', '<C-l>', '<C-w>l')
+vim.keymap.set("n", "<leader>e", "<cmd>Oil<cr>")
 
 -- Auto commands
 vim.api.nvim_create_autocmd('TextYankPost', {
@@ -128,43 +129,15 @@ require("lazy").setup({
   },
 
   -- File explorer: Oil.nvim (edit directories like buffers)
-  {
-    "stevearc/oil.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    keys = {
-      { "<leader>e", "<cmd>Oil<cr>", desc = "Open file explorer" },
-      -- { "<leader>e", "<cmd>Oil --float<cr>", desc = "Open file explorer" },
-    },
-    config = function()
-      require("oil").setup({
-        columns = {
-          "icon",
-          "permissions",
-          "size",
-          "mtime",
-        },
-        keymaps = {
-          ["g?"] = "actions.show_help",
-          ["<CR>"] = "actions.select",
-          ["<C-s>"] = "actions.select_vsplit",
-          ["<C-h>"] = "actions.select_split",
-          ["<C-t>"] = "actions.select_tab",
-          ["<C-p>"] = "actions.preview",
-          ["<C-c>"] = "actions.close",
-          ["<C-l>"] = "actions.refresh",
-          ["-"] = "actions.parent",
-          ["_"] = "actions.open_cwd",
-          ["`"] = "actions.cd",
-          ["~"] = "actions.tcd",
-          ["gs"] = "actions.change_sort",
-          ["gx"] = "actions.open_external",
-          ["g."] = "actions.toggle_hidden",
-        },
-      })
-
-
-    end
-  },
+	{
+		"stevearc/oil.nvim",
+		config = function()
+			require("oil").setup({
+				float = { padding = 4 },
+				view_options = { show_hidden = true },
+			})
+		end,
+	},
 
   -- Fuzzy finder: FZF-Lua (native fzf integration)
   {

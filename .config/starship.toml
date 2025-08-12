@@ -1,0 +1,22 @@
+add_newline = true
+
+[character]
+symbol = "❯"
+style_success = "bold green"
+style_failure = "bold red"
+
+[directory]
+style = "green"
+truncation_length = 3
+
+[cmd_duration]
+min_time = 500
+format = "[$duration]($style) "
+style = "yellow"
+
+[git_branch]
+format = "[$branch]($style) "
+style = "bright-green"
+
+[git_status]
+style = "green"

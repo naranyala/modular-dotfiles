@@ -1,11 +1,11 @@
 
 #!/usr/bin/bash
 
-set -a
-source .env
-set +a
-
+# set -a
+# source .env
+# set +a
 # echo "$DOT_PATH"
+DOT_PATH="$HOME/project-remote/modular-dotfiles"
 
 target="$HOME/.zshrc"
 source="$DOT_PATH/.zshrc"

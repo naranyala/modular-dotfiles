@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # Get current user
-USER_NAME=$(whoami)
+# USER_NAME=$(whoami)
+USER_NAME="naranyala"
 # MOUNT_BASE="/run/media/$USER_NAME"
 MOUNT_BASE="/media/$USER_NAME"
 
