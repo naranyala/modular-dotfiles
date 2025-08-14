@@ -8,7 +8,8 @@
 -- require("lazy_pycpp_v3")
 -- require("lazy_pycpp_v4")
 --
-require("lazy_jsx_frontend") -- BEST 
+-- require("lazy_jsx_frontend") -- BEST 
+require("lazy_ocaml_first") -- BEST 
 
 -- require("lazy_ergonomic_new")
 -- require("lazy_vimscript") 

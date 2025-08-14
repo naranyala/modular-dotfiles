@@ -40,20 +40,53 @@ vim.g.loaded_netrwPlugin = 1
 
 -- Plugin setup
 require("lazy").setup({
+
   -- File explorer
   {
-    "nvim-tree/nvim-tree.lua",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v3.x",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-web-devicons",
+      "MunifTanjim/nui.nvim",
+    },
+    cmd = "Neotree",
+    keys = {
+      { "<leader>e", "<cmd>Neotree toggle<cr>", desc = "Toggle file explorer" },
+    },
     config = function()
-      require("nvim-tree").setup({
-        view = { width = 30 },
-        renderer = { group_empty = true, highlight_git = true },
-        filters = { dotfiles = false },
-        git = { enable = true },
+      require('neo-tree').setup({
+        close_if_last_window = true,
+        popup_border_style = 'rounded',
+        enable_git_status = true,
+        enable_diagnostics = true,
+        filesystem = {
+          filtered_items = {
+            visible = true,
+            hide_dotfiles = false,
+            hide_gitignored = false,
+          },
+        },
       })
-      vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>")
-    end,
+    end
   },
+
+  -- File explorer
+  -- {
+  --   "nvim-tree/nvim-tree.lua",
+  --   dependencies = { "nvim-tree/nvim-web-devicons" },
+  --   config = function()
+  --     require("nvim-tree").setup({
+  --       view = { width = 30 },
+  --       renderer = { 
+  --         group_empty = true, highlight_git = true 
+  --       },
+  --       filters = { dotfiles = false },
+  --       git = { enable = true },
+  --     })
+  --     vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>")
+  --   end,
+  -- },
 
   -- Syntax highlighting
   {

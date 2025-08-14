@@ -5,6 +5,8 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 export PATH="$HOME/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin:$PATH"
 export PATH="/media/naranyala/Data/__DOWNLOADS-2025/flutter-linux/flutter/bin:$PATH"
 
+export PATH="$HOME/.bun/bin:$PATH"
+
 # Created by `pipx` on 2025-07-15 16:10:52
 export PATH="$PATH:/home/naranyala/.local/bin"
 export PATH="$HOME/.cargo/bin:$PATH"
