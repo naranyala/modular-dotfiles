@@ -1,5 +1,9 @@
 
+
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+export PATH="$HOME/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin:$PATH"
+export PATH="/media/naranyala/Data/__DOWNLOADS-2025/flutter-linux/flutter/bin:$PATH"
 
 # Created by `pipx` on 2025-07-15 16:10:52
 export PATH="$PATH:/home/naranyala/.local/bin"
@@ -7,7 +11,7 @@ export PATH="$HOME/.cargo/bin:$PATH"
 export PKG_CONFIG_PATH=/path/to/pkgconfig:$PKG_CONFIG_PATH
 
 # eval /usr/bin/zsh
-eval /home/linuxbrew/.linuxbrew/bin/nu
+# eval /home/linuxbrew/.linuxbrew/bin/nu
 
 # pnpm
 export PNPM_HOME="/home/naranyala/.local/share/pnpm"

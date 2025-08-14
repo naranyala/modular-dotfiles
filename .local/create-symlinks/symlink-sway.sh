@@ -1,22 +1,31 @@
 
 #!/usr/bin/bash
 
-# set -a
-# source .env
-# set +a
-# echo "$DOT_PATH"
-DOT_PATH="$HOME/project-remote/modular-dotfiles"
+DOT_PATH="$HOME/projects-remote/modular-dotfiles"
 
 target="$HOME/.config/sway/config"
 source="$DOT_PATH/.config/sway/config"
+backup="$target.bak"
+
+# Check if target exists
+if [ -e "$target" ]; then
+    echo "📦 Backing up existing '$target' to '$backup'..."
+    cp -a "$target" "$backup"
+else
+    echo "ℹ️ No existing '$target' found. Skipping backup."
+fi
 
 # Confirm before deletion
-read -p "This will delete '$target'. Proceed? [y/N]: " confirm
+read -p "⚠️ This will delete '$target' and create a symlink. Proceed? [y/N]: " confirm
 if [[ "$confirm" =~ ^[Yy]$ ]]; then
+    echo "🗑 Removing '$target'..."
     rm -rf "$target"
+
+    echo "🔗 Creating symlink: '$target' → '$source'"
     ln -s "$source" "$target"
-    echo "Symlink created: '$target' → '$source'"
+
+    echo "✅ Done!"
 else
-    echo "Operation cancelled."
+    echo "❌ Operation cancelled."
 fi
 
