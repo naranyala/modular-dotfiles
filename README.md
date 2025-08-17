@@ -16,6 +16,8 @@
 - install homebrew package manager
 
 > /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+> brew install zsh
+> /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 - browser of choice: floorp (firefox based with vertical tabs and more)
 
@@ -63,6 +65,9 @@ or
 ## debian-based only
 
 - remove bloats `sudo apt remove libreoffice-*`
+
+> sudo apt install snapd 
+> snap install ghostty --classic
 
 > sudo apt install vim vlc
 > apt remove firefox-esr # or others built-in browser

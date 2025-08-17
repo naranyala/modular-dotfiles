@@ -1,0 +1,4 @@
+bat v0.25.0:
+    bat
+zellij v0.42.2:
+    zellij

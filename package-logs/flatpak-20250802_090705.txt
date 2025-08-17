@@ -1,0 +1,9 @@
+com.github.wwmm.pulseeffects	4.8.7
+dev.lapce.lapce	0.4.2
+io.github.thetumultuousunicornofdarkness.cpu-x	5.3.1
+io.github.ungoogled_software.ungoogled_chromium	138.0.7204.96-1
+io.neovim.nvim	0.11.2
+net.sourceforge.VMPK	0.9.1
+org.gnome.Papers	48.4
+org.inkscape.Inkscape	1.4.2
+org.kde.dolphin	25.04.3

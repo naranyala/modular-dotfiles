@@ -1,0 +1,8 @@
+bat v0.25.0:
+    bat
+cargo-binstall v1.14.2:
+    cargo-binstall
+dioxus-cli v0.6.3:
+    dx
+zellij v0.42.2:
+    zellij

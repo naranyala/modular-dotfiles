@@ -8,11 +8,12 @@
 -- require("lazy_pycpp_v3")
 -- require("lazy_pycpp_v4")
 --
--- require("lazy_jsx_frontend") -- BEST 
-require("lazy_ocaml_first") -- BEST 
+-- require("lazy_jsx_frontend") -- BEST
+-- require("lazy_ocaml_first") -- BEST
+require("lazy_scala_jvm") -- BEST
 
 -- require("lazy_ergonomic_new")
--- require("lazy_vimscript") 
+-- require("lazy_vimscript")
 -- require("lazy_ergonomic1")
 -- require("lazy_ergonomic2")
 -- require("lazy_readthedocs")
@@ -53,9 +54,9 @@ vim.o.sidescroll = 0
 vim.o.sidescrolloff = 0
 
 vim.opt.clipboard = "unnamedplus" -- clipboard support
-vim.o.wrap = true -- Enable line wrapping
-vim.o.textwidth = 80 -- Optional: Set max text width for formatting
-vim.o.colorcolumn = "+1" -- Optional: Add a vertical guideline
+vim.o.wrap = true                 -- Enable line wrapping
+vim.o.textwidth = 80              -- Optional: Set max text width for formatting
+vim.o.colorcolumn = "+1"          -- Optional: Add a vertical guideline
 
 
 
@@ -68,5 +69,3 @@ vim.o.termguicolors = true
 
 -- require("theme_paperlike_day").setup()
 require("theme_paperlike_night").setup()
-
-
