@@ -16,8 +16,9 @@
 - install homebrew package manager
 
 > /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-> brew install zsh
 > /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+> brew install zig
+> brew install dotnet
 
 - browser of choice: floorp (firefox based with vertical tabs and more)
 

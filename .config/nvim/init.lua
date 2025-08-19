@@ -10,7 +10,8 @@
 --
 -- require("lazy_jsx_frontend") -- BEST
 -- require("lazy_ocaml_first") -- BEST
-require("lazy_scala_jvm") -- BEST
+-- require("lazy_scala_jvm") -- BEST
+require("lazy_python_dart_fsharp") -- BEST
 
 -- require("lazy_ergonomic_new")
 -- require("lazy_vimscript")

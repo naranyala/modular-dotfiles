@@ -1,6 +1,16 @@
 
+echo "> pangkas, pangkas, pangkas"
+echo "> cukup, cukup, cukup"
 
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+# eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+
+export PATH="/usr/local/bin:$PATH"
+# export PATH="$HOME/.local/share/ponyup/bin:$PATH"
+
+export PATH="/media/naranyala/Data1/diskd-binaries/flutter/bin:$PATH"
+
 
 export PATH="$HOME/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin:$PATH"
 export PATH="/media/naranyala/Data/__DOWNLOADS-2025/flutter-linux/flutter/bin:$PATH"
@@ -28,3 +38,4 @@ export PATH="$PNPM_HOME:$PATH"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
