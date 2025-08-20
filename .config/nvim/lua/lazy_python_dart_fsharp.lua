@@ -75,33 +75,15 @@ require("lazy").setup({
 		end,
 	},
 
-	-- File navigation with oil.nvim
+	-- File explorer with oil.nvim
 	{
 		"stevearc/oil.nvim",
 		config = function()
 			require("oil").setup({
 				default_file_explorer = true,
-				columns = { "icon", "permissions", "size" },
-				buf_options = { buflisted = false, bufhidden = "hide" },
-				win_options = { wrap = false, signcolumn = "no", cursorcolumn = false },
-				delete_to_trash = true,
-				skip_confirm_for_simple_edits = true,
-				view_options = { show_hidden = false },
-				keymaps = {
-					["g?"] = "actions.show_help",
-					["<CR>"] = "actions.select",
-					["<C-v>"] = "actions.select_vsplit",
-					["<C-h>"] = "actions.select_split",
-					["-"] = "actions.parent",
-					["_"] = "actions.open_cwd",
-					["`"] = "actions.cd",
-					["~"] = "actions.tcd",
-					["gs"] = "actions.change_sort",
-					["gx"] = "actions.open_external",
-					["g."] = "actions.toggle_hidden",
-				},
+				view_options = { show_hidden = true },
 			})
-			keymap("n", "<leader>e", "<CMD>Oil<CR>", { desc = "Open oil" })
+			vim.keymap.set("n", "<leader>e", ":Oil<CR>", { desc = "Open Oil File Explorer" })
 		end,
 	},
 
@@ -149,7 +131,7 @@ require("lazy").setup({
 					"vim",
 					"python",
 					"dart",
-					"fsharp",
+					-- "fsharp",
 					"javascript",
 					"typescript",
 					"html",
@@ -253,23 +235,80 @@ require("lazy").setup({
 	},
 
 	-- F# Support
-	{ "ionide/ionide-vim", ft = "fsharp" },
+	-- { "ionide/ionide-vim", ft = "fsharp" },
 
 	-- UI
+	-- Statusline
 	{
 		"nvim-lualine/lualine.nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		config = function()
+			local function file_stats()
+				local buf = vim.api.nvim_get_current_buf()
+				if vim.api.nvim_buf_get_option(buf, "buftype") ~= "" then
+					return "" -- Skip for non-file buffers
+				end
+
+				-- Line count
+				local lines = vim.api.nvim_buf_line_count(buf)
+
+				-- Word count
+				local words = 0
+				local content = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
+				for _, line in ipairs(content) do
+					for _ in line:gmatch("%S+") do
+						words = words + 1
+					end
+				end
+
+				-- Character count
+				local chars = #table.concat(content, "")
+
+				return string.format("lines %d | words %d | chars %d", lines, words, chars)
+			end
+
 			require("lualine").setup({
-				options = { theme = "catppuccin" },
-				sections = {
-					lualine_a = { "mode" },
-					lualine_b = { "branch", "diff", "diagnostics" },
-					lualine_c = { "filename" },
-					lualine_x = { "filetype" },
-					lualine_y = { "progress" },
-					lualine_z = { "location" },
+				options = {
+					theme = "auto",
+					component_separators = "",
+					section_separators = "",
+					disabled_filetypes = {},
+					globalstatus = true,
 				},
+				sections = {
+					lualine_a = {},
+					lualine_b = {},
+					lualine_c = {
+						{
+							"filename",
+							path = 2, -- 2 = absolute path
+							symbols = {
+								modified = "[+]",
+								readonly = "[-]",
+								unnamed = "[No Name]",
+							},
+						},
+					},
+					lualine_x = {},
+					lualine_y = {},
+					lualine_z = {
+						{ file_stats },
+					},
+				},
+				inactive_sections = {
+					lualine_a = {},
+					lualine_b = {},
+					lualine_c = {
+						{
+							"filename",
+							path = 2, -- Absolute path for inactive buffers too
+						},
+					},
+					lualine_x = {},
+					lualine_y = {},
+					lualine_z = {},
+				},
+				extensions = {},
 			})
 		end,
 	},
@@ -288,7 +327,26 @@ require("lazy").setup({
 		end,
 	},
 
-	{ "numToStr/Comment.nvim", config = true },
+	{
+		"numToStr/Comment.nvim",
+		config = function()
+			require("Comment").setup()
+		end,
+	},
+	{
+		"terrortylor/nvim-comment",
+		config = function()
+			require("nvim_comment").setup({
+				marker_padding = true,
+				comment_empty = true,
+				comment_empty_trim_whitespace = true,
+				create_mappings = true,
+				line_mapping = "gcc",
+				operator_mapping = "gc",
+				comment_chunk_text_object = "ic",
+			})
+		end,
+	},
 
 	{
 		"kylechui/nvim-surround",
@@ -305,7 +363,7 @@ require("lazy").setup({
 				formatters_by_ft = {
 					python = { "isort", "black" },
 					dart = { "dart_format" },
-					fsharp = { "fantomas" },
+					-- fsharp = { "fantomas" },
 					lua = { "stylua" },
 					javascript = { "prettier" },
 					typescript = { "prettier" },
@@ -344,29 +402,29 @@ local on_attach = function(client, bufnr)
 	keymap("n", "]d", vim.diagnostic.goto_next, opts)
 end
 
-mason_lspconfig.setup_handlers({
-	function(server_name)
-		lspconfig[server_name].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
-	end,
-
-	["lua_ls"] = function()
-		lspconfig.lua_ls.setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-			settings = {
-				Lua = {
-					runtime = { version = "LuaJIT" },
-					workspace = { checkThirdParty = false, library = { vim.env.VIMRUNTIME } },
-					completion = { callSnippet = "Replace" },
-					diagnostics = { globals = { "vim" } },
-				},
-			},
-		})
-	end,
-})
+-- mason_lspconfig.setup_handlers({
+-- 	function(server_name)
+-- 		lspconfig[server_name].setup({
+-- 			capabilities = capabilities,
+-- 			on_attach = on_attach,
+-- 		})
+-- 	end,
+--
+-- 	["lua_ls"] = function()
+-- 		lspconfig.lua_ls.setup({
+-- 			capabilities = capabilities,
+-- 			on_attach = on_attach,
+-- 			settings = {
+-- 				Lua = {
+-- 					runtime = { version = "LuaJIT" },
+-- 					workspace = { checkThirdParty = false, library = { vim.env.VIMRUNTIME } },
+-- 					completion = { callSnippet = "Replace" },
+-- 					diagnostics = { globals = { "vim" } },
+-- 				},
+-- 			},
+-- 		})
+-- 	end,
+-- })
 
 -----------------------------------------------------------
 -- 5. AUTOCOMMANDS & DIAGNOSTICS

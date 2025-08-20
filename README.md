@@ -70,7 +70,7 @@ or
 > sudo apt install snapd 
 > snap install ghostty --classic
 
-> sudo apt install vim vlc
+> sudo apt install vim vlc inkscape
 > apt remove firefox-esr # or others built-in browser
 
 - important management 
