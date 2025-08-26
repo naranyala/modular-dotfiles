@@ -109,6 +109,22 @@ require("lazy").setup({
     end,
   },
 
+  {
+    "stevearc/conform.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    config = function()
+      require("conform").setup {
+        formatters_by_ft = {
+          c = { "clang_format" },
+        },
+        format_on_save = {
+          timeout_ms = 500,
+          lsp_fallback = true,
+        },
+      }
+    end
+  },
+
   -- LSP Configuration - Zero-config LSP
   {
     "neovim/nvim-lspconfig",
@@ -120,7 +136,7 @@ require("lazy").setup({
     config = function()
       require("mason").setup()
       require("mason-lspconfig").setup({
-        ensure_installed = { "lua_ls", "tsserver", "pyright", "rust_analyzer" },
+        ensure_installed = { "lua_ls", "rust_analyzer", "clang-format" },
         automatic_installation = true,
       })
       require("fidget").setup({})
@@ -376,7 +392,6 @@ require("lazy").setup({
       })
     end,
   },
-
   -- Which-key for discoverable keybindings
   {
     "folke/which-key.nvim",
@@ -992,3 +1007,9 @@ autocmd("VimEnter", {
     end
   end,
 })
+
+vim.keymap.set("n", "<leader>td", function()
+  local datetime = os.date("%Y-%m-%d %H:%M:%S")
+  local todo = "TODO (" .. datetime .. ") "
+  vim.api.nvim_put({ todo }, "c", true, true)
+end, { desc = "Insert TODO with timestamp" })

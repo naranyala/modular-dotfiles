@@ -1,6 +1,9 @@
 
-echo "> set deadline, make decision, take responsibility"
-echo "> laki, kerja pake deadline, bukan perasaan"
+# echo "> set deadline, make decision, take responsibility"
+# echo "> laki, kerja pake deadline, bukan perasaan"
+echo "> karimun jawa dan banda neira."
+echo "> siap sedia dan nyaman istirahatnya."
+echo "> it's already half done — make it pay off."
 
 # eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
