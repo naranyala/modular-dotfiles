@@ -4,6 +4,7 @@
 echo "> karimun jawa dan banda neira."
 echo "> siap sedia dan nyaman istirahatnya."
 echo "> it's already half done — make it pay off."
+echo "> no commits on weekends"
 
 # eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
