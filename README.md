@@ -60,8 +60,17 @@ or
 > pnpx puppeteer browsers install chrome
 
 
+> brew install rustup 
 
 ---
+
+## fedora-based only 
+
+
+## arch-based only 
+
+TODO
+
 
 ## debian-based only
 
@@ -83,10 +92,6 @@ or
 > sudo apt install baobab ncdu 
 
 ---
-
-## arch-based only 
-
-TODO
 
 ---
 
