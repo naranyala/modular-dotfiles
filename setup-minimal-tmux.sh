@@ -13,10 +13,13 @@ setw -g pane-base-index 1
 set-option -g renumber-windows on
 set-option -g mouse on
 
+
 # Change prefix to SPACE key
 unbind C-b
 set -g prefix C-Space
 bind C-Space send-prefix
+
+set-option -g status-position top
 
 # --- Window bar formatting ---
 # Inactive windows: just index + name, with subtle color
@@ -41,8 +44,9 @@ set -g status-bg black
 set -g status-fg white
 set -g status-interval 5
 
-bind | split-window -h
-bind - split-window -v
+bind-key - split-window -v -c "#{pane_current_path}"
+bind-key | split-window -h -c "#{pane_current_path}"
+
 
 bind -n M-Left select-pane -L
 bind -n M-Right select-pane -R
