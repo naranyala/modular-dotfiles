@@ -59,8 +59,18 @@ or
 > pnpm i -g md-to-pdf
 > pnpx puppeteer browsers install chrome
 
+### install rust toolchain
 
-> brew install rustup 
+> sudo dnf install rustup 
+> /usr/bin/rustup-init
+
+> sudo dnf install VirtualBox
+
+### install onlyoffice
+
+> sudo dnf install snapd
+> sudo systemctl enable --now snapd.socket
+> sudo snap install onlyoffice-desktopeditors
 
 ---
 

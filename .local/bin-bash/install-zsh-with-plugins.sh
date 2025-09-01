@@ -27,13 +27,38 @@ log() {
     echo "[$(date '+%F %T')] $*" | tee -a "$LOG_FILE"
 }
 
+### DETECT DISTRO BY PACKAGE MANAGER ###
+detect_distro() {
+    if command -v dnf &>/dev/null; then
+        DISTRO="fedora"
+    elif command -v pacman &>/dev/null; then
+        DISTRO="arch"
+    elif command -v apt &>/dev/null; then
+        DISTRO="debian"
+    else
+        log "✗ Unsupported or unknown distro. No known package manager found."
+        exit 1
+    fi
+}
+
 ### INSTALL ZSH ###
 install_zsh() {
     if command -v zsh &>/dev/null; then
         log "✓ Zsh already installed."
     else
         log "→ Installing Zsh..."
-        sudo dnf install -y zsh &>> "$LOG_FILE"
+        case "$DISTRO" in
+            fedora)
+                sudo dnf install -y zsh git curl &>> "$LOG_FILE"
+                ;;
+            arch)
+                sudo pacman -Sy --noconfirm zsh git curl &>> "$LOG_FILE"
+                ;;
+            debian)
+                sudo apt update &>> "$LOG_FILE"
+                sudo apt install -y zsh git curl &>> "$LOG_FILE"
+                ;;
+        esac
     fi
 }
 
@@ -85,7 +110,7 @@ ZSH_THEME="robbyrussell"
 plugins=(${BUILTIN_PLUGINS[*]} ${CUSTOM_PLUGINS[*]})
 source \$ZSH/oh-my-zsh.sh
 
-# Load custom plugins manually if needed
+# Load custom plugins manually
 source \$ZSH_CUSTOM/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source \$ZSH_CUSTOM/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 EOF
@@ -103,6 +128,7 @@ set_default_shell() {
 
 ### MAIN ###
 log "=== Zsh + Oh My Zsh Setup Initiated ==="
+detect_distro
 install_zsh
 backup_zshrc
 install_oh_my_zsh
