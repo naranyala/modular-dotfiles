@@ -125,49 +125,60 @@ require("lazy").setup({
     end
   },
 
-  -- LSP Configuration - Zero-config LSP
+  -- LSP
   {
     "neovim/nvim-lspconfig",
     dependencies = {
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
-      "j-hui/fidget.nvim",
+      "nvimtools/none-ls.nvim",
     },
     config = function()
       require("mason").setup()
       require("mason-lspconfig").setup({
-        ensure_installed = { "lua_ls", "rust_analyzer", "clang-format" },
-        automatic_installation = true,
-      })
-      require("fidget").setup({})
-
-      -- LSP keymaps and configuration
-      vim.api.nvim_create_autocmd("LspAttach", {
-        callback = function(event)
-          local map = function(keys, func, desc)
-            vim.keymap.set("n", keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
-          end
-
-          -- Note: gd is now handled by our adaptive function below
-          map("gr", require("telescope.builtin").lsp_references, "Goto References")
-          map("gi", require("telescope.builtin").lsp_implementations, "Goto Implementation")
-          map("<leader>D", require("telescope.builtin").lsp_type_definitions, "Type Definition")
-          map("<leader>ds", require("telescope.builtin").lsp_document_symbols, "Document Symbols")
-          map("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "Workspace Symbols")
-          map("<leader>rn", vim.lsp.buf.rename, "Rename")
-          map("<leader>ca", vim.lsp.buf.code_action, "Code Action")
-          map("K", vim.lsp.buf.hover, "Hover Documentation")
-          map("gD", vim.lsp.buf.declaration, "Goto Declaration")
-        end,
+        ensure_installed = {
+          "lua_ls",
+          "ts_ls",
+          "html", "cssls", "eslint" },
       })
 
-      -- Configure LSP servers
-      local servers = { "lua_ls", "tsserver", "pyright", "rust_analyzer" }
-      for _, server in ipairs(servers) do
-        require("lspconfig")[server].setup({
-          capabilities = require("cmp_nvim_lsp").default_capabilities(),
-        })
+      local on_attach = function(client, bufnr)
+        local opts = { buffer = bufnr }
+        vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+        vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+        vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+        vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+        vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
+        vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
       end
+
+      local lspconfig = require("lspconfig")
+      local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+      lspconfig.ts_ls.setup({ on_attach = on_attach, capabilities = capabilities })
+      lspconfig.html.setup({ on_attach = on_attach, capabilities = capabilities })
+      lspconfig.cssls.setup({ on_attach = on_attach, capabilities = capabilities })
+      lspconfig.eslint.setup({ on_attach = on_attach, capabilities = capabilities })
+
+      -- Formatting with none-ls
+      local null_ls = require("null-ls")
+      null_ls.setup({
+        sources = {
+          null_ls.builtins.formatting.prettier.with({
+            filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact", "html", "css" },
+          }),
+        },
+      })
+
+      -- Diagnostics
+      vim.diagnostic.config({
+        virtual_text = false,
+        signs = true,
+        float = { border = "rounded" },
+      })
+      vim.keymap.set("n", "<leader>ds", vim.diagnostic.open_float)
+      vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
+      vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
     end,
   },
 
@@ -398,13 +409,13 @@ require("lazy").setup({
     event = "VeryLazy",
     config = function()
       require("which-key").setup()
-      require("which-key").register({
-        ["<leader>f"] = { name = "+Find" },
-        ["<leader>h"] = { name = "+Git Hunks" },
-        ["<leader>c"] = { name = "+Code" },
-        ["<leader>d"] = { name = "+Diagnostics" },
-        ["<leader>g"] = { name = "+Goto" },
-      })
+      -- require("which-key").register({
+      --   ["<leader>f"] = { name = "+Find" },
+      --   ["<leader>h"] = { name = "+Git Hunks" },
+      --   ["<leader>c"] = { name = "+Code" },
+      --   ["<leader>d"] = { name = "+Diagnostics" },
+      --   ["<leader>g"] = { name = "+Goto" },
+      -- })
     end,
   },
 
