@@ -7,7 +7,8 @@ read -p "Enter the path to the executable binary: " exec_path
 read -p "Enter the path to the icon (PNG/SVG/etc): " icon_path
 
 # Define output launcher filename
-desktop_file="$HOME/.local/share/applications/${app_name}.desktop"
+# desktop_file="$HOME/.local/share/applications/${app_name}.desktop"
+desktop_file="/usr/share/applications/${app_name}.desktop"
 
 # Create the .desktop file
 cat > "$desktop_file" << EOF

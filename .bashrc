@@ -14,7 +14,7 @@ export PATH="/usr/local/bin:$PATH"
 # export PATH="$HOME/.local/share/ponyup/bin:$PATH"
 
 export PATH="/media/naranyala/Data1/diskd-binaries/flutter/bin:$PATH"
-export PATH="/media/naranyala/Data1/diskd-binaries/flutter/bin:$PATH"
+export PATH="/run/media/naranyala/Data/diskd-binaries/flutter/bin:$PATH"
 
 
 export PATH="$HOME/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin:$PATH"
