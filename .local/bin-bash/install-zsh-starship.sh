@@ -6,12 +6,18 @@ command_exists() {
     command -v "$1" >/dev/null 2>&1
 }
 
+# Detect Fedora-based system
+if ! command_exists dnf; then
+    echo "❌ This script is intended for Fedora-based systems (requires 'dnf')."
+    exit 1
+fi
+
 echo "🔍 Checking dependencies..."
 
 # Install Zsh if not present
 if ! command_exists zsh; then
     echo "📦 Installing Zsh..."
-    sudo apt update && sudo apt install -y zsh
+    sudo dnf install -y zsh
 else
     echo "✅ Zsh already installed."
 fi
@@ -20,16 +26,16 @@ fi
 for pkg in git curl; do
     if ! command_exists "$pkg"; then
         echo "📦 Installing $pkg..."
-        sudo apt install -y "$pkg"
+        sudo dnf install -y "$pkg"
     else
         echo "✅ $pkg already installed."
     fi
 done
 
-# Install fonts-powerline for better visuals
+# Install Powerline fonts for better visuals
 if ! fc-list | grep -iq "Powerline"; then
     echo "🎨 Installing Powerline fonts..."
-    sudo apt install -y fonts-powerline
+    sudo dnf install -y powerline-fonts
 else
     echo "✅ Powerline fonts already installed."
 fi
@@ -66,20 +72,12 @@ for name in "${!plugins[@]}"; do
     fi
 done
 
-# Update .zshrc plugins
-sed -i 's/plugins=(git)/plugins=(git zsh-autosuggestions zsh-syntax-highlighting)/' ~/.zshrc
-
-# Install Starship
+# Install Starship prompt
 if ! command_exists starship; then
     echo "🚀 Installing Starship..."
     curl -sS https://starship.rs/install.sh | sh
 else
     echo "✅ Starship already installed."
-fi
-
-# Add Starship init to .zshrc
-if ! grep -q 'starship init zsh' ~/.zshrc; then
-    echo 'eval "$(starship init zsh)"' >> ~/.zshrc
 fi
 
 # Create Starship config
@@ -90,6 +88,31 @@ add_newline = false
 [character]
 success_symbol = "[❯](bold green)"
 error_symbol = "[✗](bold red)"
+EOF
+
+# Write full .zshrc
+echo "📝 Writing new .zshrc..."
+cat <<'EOF' > ~/.zshrc
+export ZSH="$HOME/.oh-my-zsh"
+ZSH_THEME="robbyrussell"
+
+plugins=(
+  git
+  zsh-autosuggestions
+  zsh-syntax-highlighting
+)
+
+source $ZSH/oh-my-zsh.sh
+
+# Custom plugin sourcing
+source $ZSH_CUSTOM/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $ZSH_CUSTOM/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# Completion system
+autoload -Uz compinit && compinit
+
+# Starship prompt
+eval "$(starship init zsh)"
 EOF
 
 echo "🎉 Setup complete! Restart your terminal or run: exec zsh"

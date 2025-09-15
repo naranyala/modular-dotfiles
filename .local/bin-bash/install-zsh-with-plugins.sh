@@ -9,12 +9,7 @@ ZSHRC_BACKUP="$HOME/.zshrc.backup.$(date '+%Y%m%d_%H%M%S')"
 OH_MY_ZSH_DIR="$HOME/.oh-my-zsh"
 ZSH_CUSTOM="${OH_MY_ZSH_DIR}/custom"
 BUILTIN_PLUGINS=(git z sudo command-not-found colored-man-pages history-substring-search web-search dirhistory)
-CUSTOM_PLUGINS=(
-    zsh-autosuggestions
-    zsh-syntax-highlighting
-    zsh-completions
-    fzf-tab
-)
+CUSTOM_PLUGINS=(zsh-autosuggestions zsh-syntax-highlighting zsh-completions fzf-tab)
 declare -A CUSTOM_PLUGIN_REPOS=(
     [zsh-autosuggestions]="https://github.com/zsh-users/zsh-autosuggestions"
     [zsh-syntax-highlighting]="https://github.com/zsh-users/zsh-syntax-highlighting"
@@ -27,7 +22,7 @@ log() {
     echo "[$(date '+%F %T')] $*" | tee -a "$LOG_FILE"
 }
 
-### DETECT DISTRO BY PACKAGE MANAGER ###
+### DETECT DISTRO ###
 detect_distro() {
     if command -v dnf &>/dev/null; then
         DISTRO="fedora"
@@ -48,17 +43,13 @@ install_zsh() {
     else
         log "→ Installing Zsh..."
         case "$DISTRO" in
-            fedora)
-                sudo dnf install -y zsh git curl &>> "$LOG_FILE"
-                ;;
-            arch)
-                sudo pacman -Sy --noconfirm zsh git curl &>> "$LOG_FILE"
-                ;;
+            fedora) sudo dnf install -y zsh git curl ;;
+            arch) sudo pacman -Sy --noconfirm zsh git curl ;;
             debian)
-                sudo apt update &>> "$LOG_FILE"
-                sudo apt install -y zsh git curl &>> "$LOG_FILE"
+                sudo apt update
+                sudo apt install -y zsh git curl
                 ;;
-        esac
+        esac &>> "$LOG_FILE"
     fi
 }
 
@@ -104,15 +95,35 @@ install_custom_plugins() {
 ### CONFIGURE ZSHRC ###
 configure_zshrc() {
     log "→ Writing new .zshrc with plugin configuration..."
-    cat > "$ZSHRC" <<EOF
-export ZSH="$OH_MY_ZSH_DIR"
+    cat > "$ZSHRC" <<'EOF'
+export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="robbyrussell"
-plugins=(${BUILTIN_PLUGINS[*]} ${CUSTOM_PLUGINS[*]})
-source \$ZSH/oh-my-zsh.sh
 
-# Load custom plugins manually
-source \$ZSH_CUSTOM/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source \$ZSH_CUSTOM/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+plugins=(
+  git
+  z
+  sudo
+  command-not-found
+  colored-man-pages
+  history-substring-search
+  web-search
+  dirhistory
+  zsh-autosuggestions
+  zsh-syntax-highlighting
+  zsh-completions
+  fzf-tab
+)
+
+source $ZSH/oh-my-zsh.sh
+
+# Custom plugin sourcing
+source $ZSH_CUSTOM/plugins/zsh-completions/zsh-completions.plugin.zsh
+source $ZSH_CUSTOM/plugins/fzf-tab/fzf-tab.plugin.zsh
+source $ZSH_CUSTOM/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $ZSH_CUSTOM/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# Completion system
+autoload -Uz compinit && compinit
 EOF
 }
 
