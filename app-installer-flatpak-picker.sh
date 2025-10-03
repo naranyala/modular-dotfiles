@@ -1,19 +1,31 @@
 #!/usr/bin/env bash
-
 set -e
 
-# Ensure flatpak is installed
-if ! command -v flatpak &>/dev/null; then
-    echo "Installing Flatpak..."
-    sudo dnf -y install flatpak
+# === Detect package manager ===
+if command -v apt &>/dev/null; then
+    PKG_MGR="apt"
+    INSTALL_CMD="sudo apt update && sudo apt install -y"
+elif command -v dnf &>/dev/null; then
+    PKG_MGR="dnf"
+    INSTALL_CMD="sudo dnf -y install"
+else
+    echo "Unsupported package manager. Please install Flatpak manually."
+    exit 1
 fi
 
-# Enable Flathub if not already
+# === Ensure Flatpak is installed ===
+if ! command -v flatpak &>/dev/null; then
+    echo "Installing Flatpak..."
+    eval "$INSTALL_CMD flatpak"
+fi
+
+# === Enable Flathub if not already ===
 if ! flatpak remote-list | grep -q flathub; then
     echo "Adding Flathub repository..."
     sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 fi
 
+# === App list ===
 declare -A apps=(
     ["org.libreoffice.LibreOffice"]="Office suite"
     ["org.onlyoffice.desktopeditors"]="MS Office-compatible editors"
@@ -47,28 +59,49 @@ declare -A apps=(
     ["com.spotify.Client"]="Music Streaming"
 )
 
-
-echo "Select apps to install (space to select, enter to confirm):"
-
+# === Build whiptail menu choices ===
 choices=()
 for app in "${!apps[@]}"; do
     choices+=("$app" "${apps[$app]}" off)
 done
 
+# === Ensure whiptail is installed ===
 if ! command -v whiptail &>/dev/null; then
     echo "Installing whiptail..."
-    sudo dnf -y install newt
+    if [ "$PKG_MGR" = "apt" ]; then
+        eval "$INSTALL_CMD whiptail"
+    else
+        eval "$INSTALL_CMD newt"
+    fi
 fi
 
+# === Show selection menu ===
 selected=$(whiptail --title "Verified Flathub App Picker" \
     --checklist "Choose apps to install:" 25 78 15 \
     "${choices[@]}" 3>&1 1>&2 2>&3)
 
+# === Directory for .desktop files ===
+DESKTOP_DIR="$HOME/.local/share/applications"
+mkdir -p "$DESKTOP_DIR"
+
+# === Install selected apps & create launchers ===
 for app in $selected; do
     clean_app=$(echo "$app" | tr -d '"')
     echo "Installing $clean_app..."
     flatpak install -y flathub "$clean_app"
+
+    desktop_file="$DESKTOP_DIR/${clean_app}.desktop"
+    cat > "$desktop_file" <<EOF
+[Desktop Entry]
+Name=${apps[$clean_app]}
+Exec=flatpak run $clean_app
+Type=Application
+Terminal=false
+EOF
+
+    chmod +x "$desktop_file"
+    echo "Created launcher: $desktop_file"
 done
 
-echo "=== All selected verified apps installed! ==="
+echo "=== All selected verified apps installed and launchers created! ==="
 

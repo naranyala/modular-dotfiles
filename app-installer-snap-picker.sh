@@ -1,13 +1,30 @@
 #!/usr/bin/env bash
-
 set -e
+
+# Detect package manager
+if command -v apt &>/dev/null; then
+    PKG_MGR="apt"
+    INSTALL_CMD="sudo apt update && sudo apt install -y"
+elif command -v dnf &>/dev/null; then
+    PKG_MGR="dnf"
+    INSTALL_CMD="sudo dnf -y install"
+else
+    echo "Unsupported package manager. Please install snapd manually."
+    exit 1
+fi
 
 # Ensure snapd is installed
 if ! command -v snap &>/dev/null; then
     echo "Installing snapd..."
-    sudo dnf -y install snapd
-    sudo ln -s /var/lib/snapd/snap /snap || true
+    eval "$INSTALL_CMD snapd"
+
+    # Enable snapd service
     sudo systemctl enable --now snapd.socket
+
+    # On Fedora, link /snap
+    if [ "$PKG_MGR" = "dnf" ]; then
+        sudo ln -s /var/lib/snapd/snap /snap || true
+    fi
 fi
 
 declare -A apps=(
@@ -19,7 +36,7 @@ declare -A apps=(
     ["postman"]="API testing"
     ["gimp"]="Image editor"
     ["inkscape"]="Vector graphics"
-    ["blender"]="3D modeling"
+    ["blender --classic"]="3D modeling"
     ["spotify"]="Music streaming"
     ["vlc"]="Media player"
     ["audacity"]="Audio editing"
@@ -46,12 +63,17 @@ for app in "${!apps[@]}"; do
     choices+=("$app" "${apps[$app]}" off)
 done
 
-# Use whiptail for selection
+# Ensure whiptail is installed
 if ! command -v whiptail &>/dev/null; then
     echo "Installing whiptail for menu..."
-    sudo dnf -y install newt
+    if [ "$PKG_MGR" = "apt" ]; then
+        eval "$INSTALL_CMD whiptail"
+    else
+        eval "$INSTALL_CMD newt"
+    fi
 fi
 
+# Show selection menu
 selected=$(whiptail --title "Snap App Picker" \
     --checklist "Choose apps to install:" 20 78 10 \
     "${choices[@]}" 3>&1 1>&2 2>&3)
