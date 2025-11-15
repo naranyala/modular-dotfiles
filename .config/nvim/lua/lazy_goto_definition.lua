@@ -231,40 +231,49 @@ require("lazy").setup({
   },
 
   -- Telescope - Fuzzy finder
-  {
-    "nvim-telescope/telescope.nvim",
-    branch = "0.1.x",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-    },
-    config = function()
-      require("telescope").setup({
-        defaults = {
-          prompt_prefix = " ",
-          selection_caret = " ",
-          path_display = { "truncate" },
-          file_ignore_patterns = { "%.git/", "node_modules/", "%.cache/" },
-        },
-        extensions = {
-          fzf = {
-            fuzzy = true,
-            override_generic_sorter = true,
-            override_file_sorter = true,
-            case_mode = "smart_case",
-          },
-        },
-      })
-      require("telescope").load_extension("fzf")
+  -- {
+  --   "nvim-telescope/telescope.nvim",
+  --   branch = "0.1.x",
+  --   dependencies = {
+  --     "nvim-lua/plenary.nvim",
+  --     { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+  --   },
+  --   config = function()
+  --     require("telescope").setup({
+  --       defaults = {
+  --         prompt_prefix = " ",
+  --         selection_caret = " ",
+  --         path_display = { "truncate" },
+  --         file_ignore_patterns = { "%.git/", "node_modules/", "%.cache/" },
+  --       },
+  --       extensions = {
+  --         fzf = {
+  --           fuzzy = true,
+  --           override_generic_sorter = true,
+  --           override_file_sorter = true,
+  --           case_mode = "smart_case",
+  --         },
+  --       },
+  --     })
+  --     require("telescope").load_extension("fzf")
+  --
+  --     -- Telescope keymaps
+  --     local builtin = require("telescope.builtin")
+  --     vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Find Files" })
+  --     vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Live Grep" })
+  --     vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Buffers" })
+  --     vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Help Tags" })
+  --     vim.keymap.set("n", "<leader>fr", builtin.oldfiles, { desc = "Recent Files" })
+  --   end,
+  -- },
 
-      -- Telescope keymaps
-      local builtin = require("telescope.builtin")
-      vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Find Files" })
-      vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Live Grep" })
-      vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Buffers" })
-      vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Help Tags" })
-      vim.keymap.set("n", "<leader>fr", builtin.oldfiles, { desc = "Recent Files" })
-    end,
+  {
+    "ibhagwan/fzf-lua",
+    -- optional for icon support
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    -- or if using mini.icons/mini.nvim
+    -- dependencies = { "nvim-mini/mini.icons" },
+    opts = {}
   },
 
   -- File explorer with oil.nvim
@@ -1024,3 +1033,8 @@ vim.keymap.set("n", "<leader>td", function()
   local todo = "TODO (" .. datetime .. ") "
   vim.api.nvim_put({ todo }, "c", true, true)
 end, { desc = "Insert TODO with timestamp" })
+
+
+
+vim.keymap.set("n", "ff", "<cmd>FzfLua files<CR>", { buffer = true, desc = "FzfLua File Search" })
+-- vim.keymap.set("n", "fg", "<cmd><CR>", { buffer = true, desc = "Ag Content Grep" })

@@ -11,7 +11,9 @@
 -- require("lazy_ocaml_first") -- BEST
 -- require("lazy_scala_jvm") -- BEST
 -- require("lazy_python_dart_fsharp") -- BEST
-require("lazy_goto_definition") -- BEST
+
+-- require("lazy_goto_definition") -- BEST
+require("lazy_tpope_stack")
 
 -- require("lazy_ergonomic_new")
 -- require("lazy_vimscript")
@@ -69,3 +71,6 @@ vim.o.termguicolors = true
 -- require("lib_theme_paperlike_day").setup()
 require("lib_theme_paperlike_night").setup()
 -- require("lib_keybindings")
+
+
+require("lib_ag_filepicker")

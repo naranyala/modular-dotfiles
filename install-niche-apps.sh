@@ -12,6 +12,7 @@ SYSTEM_APPS=(
   guake            # Drop-down terminal
 )
 
+
 CREATIVE_APPS=(
   # gimp
   inkscape
