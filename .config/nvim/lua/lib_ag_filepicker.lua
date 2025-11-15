@@ -1,3 +1,4 @@
+
 -- ag_filepicker.lua
 -- Minimal single-file Neovim plugin using `ag`.
 -- Selecting a search result replaces the entire original buffer's contents
