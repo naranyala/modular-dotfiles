@@ -2,6 +2,8 @@
 
 -- WAJIB: lazy.nvim, mason, treesitter, harpoon, oil, fzf, rg
 
+-- TODO: hello
+
 -- require("lazy_pycpp_v1")
 -- require("lazy_pycpp_v2")
 -- require("lazy_pycpp_v3")
@@ -13,7 +15,9 @@
 -- require("lazy_python_dart_fsharp") -- BEST
 
 -- require("lazy_goto_definition") -- BEST
-require("lazy_tpope_stack")
+-- require("lazy_tpope_stack")
+-- require("lazy_sophisticated")
+require("lazy_alternative")
 
 -- require("lazy_ergonomic_new")
 -- require("lazy_vimscript")
@@ -59,7 +63,7 @@ vim.o.sidescrolloff = 0
 vim.opt.clipboard = "unnamedplus" -- clipboard support
 vim.o.wrap = true                 -- Enable line wrapping
 vim.o.textwidth = 80              -- Optional: Set max text width for formatting
-vim.o.colorcolumn = "+1"          -- Optional: Add a vertical guideline
+-- vim.o.colorcolumn = "+1"          -- Optional: Add a vertical guideline
 
 -- require("theme_paperlike").setup()
 -- require("theme_paperlike_dark").setup()
@@ -68,9 +72,30 @@ vim.o.colorcolumn = "+1"          -- Optional: Add a vertical guideline
 
 vim.o.termguicolors = true
 
+-- make every man pages open horizontally splitted
+vim.g.man_horiz = 1          -- force horizontal split
+vim.g.man_split_mode = "rightbelow"  -- place it on the right
+
+vim.opt.splitright = true  -- new vertical splits go to the right
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "man" },
+  callback = function()
+    -- If only one window, create a vsplit first
+    if vim.fn.winnr('$') == 1 then
+      vim.cmd('vsplit')
+    end
+    -- Move the current buffer (man/help) to the far right
+    vim.cmd('wincmd L')
+  end,
+})
+
 -- require("lib_theme_paperlike_day").setup()
 require("lib_theme_paperlike_night").setup()
 -- require("lib_keybindings")
 
 
+require("lib_disable_tabline")
 require("lib_ag_filepicker")
+require("lib_todo_search").setup()
+
