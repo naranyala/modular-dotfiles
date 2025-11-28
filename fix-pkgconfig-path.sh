@@ -1,40 +1,32 @@
 
-#!/bin/bash
+#!/usr/bin/env bash
+# fix-pkgconfig.sh
+# Ensure pkg-config can find Homebrew packages on macOS (Intel or Apple Silicon)
 
-# Function to add a path to PKG_CONFIG_PATH if it exists and isn't already included
-add_to_pkg_config_path() {
-    local path="$1"
-    if [ -d "$path" ] && [[ ":$PKG_CONFIG_PATH:" != *":$path:"* ]]; then
-        PKG_CONFIG_PATH="$path:$PKG_CONFIG_PATH"
-    fi
-}
+set -euo pipefail
 
-# Common paths for .pc files
-common_paths=(
-    "/usr/lib/pkgconfig"
-    "/usr/local/lib/pkgconfig"
-    "/usr/share/pkgconfig"
-    "/opt/*/lib/pkgconfig"
-    "$HOME/.local/lib/pkgconfig"
-)
+# Detect architecture
+ARCH="$(uname -m)"
 
-# Search for .pc files in common paths
-for path in "${common_paths[@]}"; do
-    add_to_pkg_config_path "$path"
-done
+case "$ARCH" in
+    arm64)
+        BREW_PREFIX="/opt/homebrew"
+        ;;
+    x86_64)
+        BREW_PREFIX="/usr/local"
+        ;;
+    *)
+        echo "Unsupported architecture: $ARCH"
+        exit 1
+        ;;
+esac
 
-# Export the updated PKG_CONFIG_PATH
-export PKG_CONFIG_PATH
+PKG_PATH="$BREW_PREFIX/lib/pkgconfig"
 
-# Update shell configuration file (e.g., ~/.bashrc)
-shell_config="$HOME/.bashrc"
-if ! grep -q "PKG_CONFIG_PATH" "$shell_config"; then
-    echo "export PKG_CONFIG_PATH=$PKG_CONFIG_PATH" >> "$shell_config"
-    echo "Updated $shell_config with PKG_CONFIG_PATH."
+# Prepend to PKG_CONFIG_PATH if not already present
+if [[ ":${PKG_CONFIG_PATH:-}:" != *":$PKG_PATH:"* ]]; then
+    export PKG_CONFIG_PATH="$PKG_PATH:${PKG_CONFIG_PATH:-}"
+    echo "PKG_CONFIG_PATH set to: $PKG_CONFIG_PATH"
 else
-    echo "PKG_CONFIG_PATH is already set in $shell_config."
+    echo "PKG_CONFIG_PATH already includes $PKG_PATH"
 fi
-
-# Print the updated PKG_CONFIG_PATH
-echo "Updated PKG_CONFIG_PATH:"
-echo "$PKG_CONFIG_PATH"
