@@ -124,19 +124,12 @@ return {
                 },
             })
 
-            vim.lsp.config('tsserver', {
-                capabilities = capabilities,
+            vim.lsp.config('ts_ls', {
                 on_attach = on_attach,
-                cmd = { "typescript-language-server", "--stdio" },
-                settings = {
-                    typescript = {
-                        format = { enable = false }, -- rely on external formatter
-                    },
-                    javascript = {
-                        format = { enable = false },
-                    },
-                },
+                capabilities = capabilities,
+                filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "vue" },
             })
+
 
             -- vim.lsp.config('volar', {
             vim.lsp.config('vue_ls', {

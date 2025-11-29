@@ -1,12 +1,12 @@
 -- SINGLE FILE NEOVIM CONFIG
 
--- require("lazy_suckless_007") -- BEST
--- require("lazy_c_asm_toolchain") -- BEST
-require("lazy_clang_rust_autoformat") -- BEST
+-- require("setup_jsvue_mode") -- BEST
+-- require("setup_casm_mode") -- BEST
+require("setup_crust_mode") -- BEST
 
-require("on_demand_fn.ok_features")
-require("on_demand_fn.ok_vue_snippets")
-require("on_demand_fn.ok_c99_snippets")
+require("atomic.ok_features")
+require("atomic.ok_vue_snippets")
+require("atomic.ok_c99_snippets")
 
 -- require("lib_grepnav").setup()
 -- require("lib.simplenav")
@@ -34,4 +34,3 @@ vim.keymap.set("n", "<C-Up>", "<Nop>")
 vim.keymap.set("n", "<C-Down>", "<Nop>")
 vim.keymap.set("n", "<C-Left>", "<Nop>")
 vim.keymap.set("n", "<C-Right>", "<Nop>")
-
