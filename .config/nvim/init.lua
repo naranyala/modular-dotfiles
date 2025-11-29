@@ -4,9 +4,9 @@
 -- require("setup_casm_mode") -- BEST
 require("setup_crust_mode") -- BEST
 
-require("atomic.ok_features")
-require("atomic.ok_vue_snippets")
-require("atomic.ok_c99_snippets")
+require("lib.ok_features")
+require("lib.ok_vue_snippets")
+require("lib.ok_c99_snippets")
 
 -- require("lib_grepnav").setup()
 -- require("lib.simplenav")
