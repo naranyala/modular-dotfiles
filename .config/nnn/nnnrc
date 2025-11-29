@@ -1,3 +1,0 @@
-# ~/.config/nnn/nnnrc
-# Remap 'l' to act like Enter in picker mode
-!l:select

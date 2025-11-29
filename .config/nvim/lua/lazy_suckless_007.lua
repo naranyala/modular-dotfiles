@@ -1,4 +1,3 @@
-
 --------------------------------------------------------------------------------
 -- OPTIONS
 --------------------------------------------------------------------------------
@@ -32,7 +31,7 @@ o.fillchars = { eob = " ", vert = "│", fold = " " }
 o.foldmethod = "expr"
 o.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 o.foldlevel = 99
-o.smoothscroll = true  -- nvim 0.10+
+o.smoothscroll = true -- nvim 0.10+
 
 g.loaded_python3_provider = 0
 g.loaded_ruby_provider = 0
@@ -44,8 +43,16 @@ g.loaded_node_provider = 0
 --------------------------------------------------------------------------------
 function Statusline()
     local modes = {
-        n = "NOR", i = "INS", v = "VIS", V = "V·L", [""] = "V·B",
-        c = "CMD", R = "REP", t = "TER", s = "SEL", S = "S·L",
+        n = "NOR",
+        i = "INS",
+        v = "VIS",
+        V = "V·L",
+        [""] = "V·B",
+        c = "CMD",
+        R = "REP",
+        t = "TER",
+        s = "SEL",
+        S = "S·L",
     }
     local m = modes[vim.fn.mode()] or vim.fn.mode()
     local git = vim.b.gitsigns_head and (" " .. vim.b.gitsigns_head) or ""
@@ -55,6 +62,7 @@ function Statusline()
     if d[2] then diag = diag .. " W" .. d[2] end
     return " " .. m .. " │ %f %m%r" .. git .. diag .. "%=  %y │ %l:%c "
 end
+
 vim.o.statusline = "%!v:lua.Statusline()"
 
 --------------------------------------------------------------------------------
@@ -63,7 +71,6 @@ vim.o.statusline = "%!v:lua.Statusline()"
 g.mapleader, g.maplocalleader = " ", " "
 local map = vim.keymap.set
 
-map("n", "<Esc>", "<cmd>noh<CR>")
 map("n", "<leader>w", "<cmd>w<CR>")
 map("n", "<leader>q", "<cmd>q<CR>")
 map("n", "<leader>Q", "<cmd>qa!<CR>")
@@ -100,6 +107,8 @@ map("n", "[q", "<cmd>cprev<CR>zz")
 map("n", "]d", vim.diagnostic.goto_next)
 map("n", "[d", vim.diagnostic.goto_prev)
 
+
+map("n", "<Esc>", "<cmd>noh<CR>")
 map("i", "jk", "<Esc>")
 map("t", "<Esc><Esc>", "<C-\\><C-n>")
 
@@ -117,7 +126,7 @@ local function native_completion()
         if col == 0 or vim.fn.getline("."):sub(col, col):match("%s") then
             return "<Tab>"
         end
-        return "<C-x><C-o>"  -- omnifunc (LSP)
+        return "<C-x><C-o>" -- omnifunc (LSP)
     end, { expr = true })
 
     map("i", "<Tab>", function()
@@ -176,7 +185,7 @@ map("n", "<leader>e", "<cmd>Ex<CR>")
 --------------------------------------------------------------------------------
 -- OPTION E: HARDMODE (force better vim habits)
 --------------------------------------------------------------------------------
-local hardmode = false  -- set true to enable
+local hardmode = false -- set true to enable
 
 if hardmode then
     -- disable arrow keys
@@ -227,7 +236,7 @@ map("n", "<leader>z", function()
         vim.opt.laststatus = 2
         vim.opt.cmdheight = 1
         vim.opt.showtabline = 1
-        vim.cmd("colorscheme kanagawa")  -- restore
+        vim.cmd("colorscheme kanagawa") -- restore
         vim.notify("Zen OFF")
     end
 end, { desc = "Zen mode" })
@@ -299,14 +308,22 @@ map("n", "dd", function()
 end, { expr = true })
 
 local runners = {
-    lua = "luafile %", python = "!python3 %", sh = "!bash %",
-    javascript = "!node %", typescript = "!npx ts-node %",
-    go = "!go run %", rust = "!cargo run", c = "!gcc % -o /tmp/a.out && /tmp/a.out",
+    lua = "luafile %",
+    python = "!python3 %",
+    sh = "!bash %",
+    javascript = "!node %",
+    typescript = "!npx ts-node %",
+    go = "!go run %",
+    rust = "!cargo run",
+    c = "!gcc % -o /tmp/a.out && /tmp/a.out",
 }
 map("n", "<leader>R", function()
     local ft = vim.bo.filetype
-    if runners[ft] then vim.cmd("w"); vim.cmd(runners[ft])
-    else vim.notify("No runner: " .. ft, vim.log.levels.WARN) end
+    if runners[ft] then
+        vim.cmd("w"); vim.cmd(runners[ft])
+    else
+        vim.notify("No runner: " .. ft, vim.log.levels.WARN)
+    end
 end, { desc = "Run file" })
 
 map("n", "<leader>T", function()
@@ -384,18 +401,25 @@ vim.opt.rtp:prepend(lazypath)
 --------------------------------------------------------------------------------
 require("lazy").setup({
 
-    require("./_shared/missing_native_apis"),
-    require("./_shared/tpope_goodies"),
-    require("./_shared/lualine_and_theme"),
+    -- require("./_shared/missing_native_apis"),
+    -- require("./_shared/tpope_goodies"),
+    -- require("./_shared/lualine_and_theme"),
+
+    require("./_shared"),
+
 
     -- COLORSCHEME (pick one)
-    { "rebelot/kanagawa.nvim", priority = 1000,
-        config = function() vim.cmd.colorscheme("kanagawa") end },
+    {
+        "rebelot/kanagawa.nvim",
+        priority = 1000,
+        config = function() vim.cmd.colorscheme("kanagawa") end
+    },
     -- { "rose-pine/neovim", name = "rose-pine", priority = 1000,
     --     config = function() vim.cmd.colorscheme("rose-pine") end },
 
     -- FUZZY FINDER
-    { "ibhagwan/fzf-lua",
+    {
+        "ibhagwan/fzf-lua",
         keys = {
             { "<leader>f", "<cmd>FzfLua files<CR>" },
             { "<leader>g", "<cmd>FzfLua live_grep<CR>" },
@@ -404,9 +428,9 @@ require("lazy").setup({
             { "<leader>o", "<cmd>FzfLua oldfiles<CR>" },
             { "<leader>h", "<cmd>FzfLua help_tags<CR>" },
             { "<leader>:", "<cmd>FzfLua command_history<CR>" },
-            { "gd", "<cmd>FzfLua lsp_definitions<CR>" },
-            { "gr", "<cmd>FzfLua lsp_references<CR>" },
-            { "gs", "<cmd>FzfLua lsp_document_symbols<CR>" },
+            { "gd",        "<cmd>FzfLua lsp_definitions<CR>" },
+            { "gr",        "<cmd>FzfLua lsp_references<CR>" },
+            { "gs",        "<cmd>FzfLua lsp_document_symbols<CR>" },
         },
         config = function()
             require("fzf-lua").setup({ "fzf-native", winopts = { height = 0.85, width = 0.85 } })
@@ -414,10 +438,13 @@ require("lazy").setup({
     },
 
     -- TREESITTER
-    { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate", event = "BufReadPost",
+    {
+        "nvim-treesitter/nvim-treesitter",
+        build = ":TSUpdate",
+        event = "BufReadPost",
         config = function()
             require("nvim-treesitter.configs").setup({
-                ensure_installed = { "lua", "vim", "vimdoc", "c", "python", "bash", "markdown", "json", "yaml", "typescript"},
+                ensure_installed = { "lua", "vim", "vimdoc", "c", "python", "bash", "markdown", "json", "yaml", "typescript" },
                 highlight = { enable = true },
                 indent = { enable = true },
                 incremental_selection = {
@@ -464,7 +491,9 @@ require("lazy").setup({
     -- },
     --
     -- GIT
-    { "lewis6991/gitsigns.nvim", event = "BufReadPre",
+    {
+        "lewis6991/gitsigns.nvim",
+        event = "BufReadPre",
         opts = {
             on_attach = function(buf)
                 local gs = require("gitsigns")
@@ -478,10 +507,15 @@ require("lazy").setup({
         },
     },
 
-    { "stevearc/oil.nvim", keys = { { "-", "<cmd>oil<cr>" } },
-        opts = { view_options = { show_hidden = true } } },
+    {
+        "stevearc/oil.nvim",
+        keys = { { "-", "<cmd>oil<cr>" } },
+        opts = { view_options = { show_hidden = true } }
+    },
 
-    { "hrsh7th/nvim-cmp", event = "insertenter",
+    {
+        "hrsh7th/nvim-cmp",
+        event = "insertenter",
         dependencies = {
             "hrsh7th/cmp-nvim-lsp",
             "hrsh7th/cmp-buffer",
@@ -506,17 +540,18 @@ require("lazy").setup({
     },
 
 
-  -- QUALITY OF LIFE: Better commenting
-  {
-    "numToStr/Comment.nvim",
-    config = function()
-      require("Comment").setup()
-      vim.keymap.set("n", "<leader>/", "<cmd>lua require('Comment.api').toggle.linewise.current()<cr>",
-        { desc = "Toggle comment" })
-      vim.keymap.set("v", "<leader>/", "<esc><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<cr>",
-        { desc = "Toggle comment" })
-    end
-  },
+    -- QUALITY OF LIFE: Better commenting
+    {
+        "numToStr/Comment.nvim",
+        config = function()
+            require("Comment").setup()
+            vim.keymap.set("n", "<leader>/", "<cmd>lua require('Comment.api').toggle.linewise.current()<cr>",
+                { desc = "Toggle comment" })
+            vim.keymap.set("v", "<leader>/",
+                "<esc><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<cr>",
+                { desc = "Toggle comment" })
+        end
+    },
 
     -- { "echasnovski/mini.nvim", config = function()
     --     require("mini.pairs").setup()      -- autopairs
@@ -527,12 +562,12 @@ require("lazy").setup({
     -- end },
 
     -- TPOPE ESSENTIALS (or use mini.nvim above)
-    { "tpope/vim-commentary", keys = { "gc", { "gc", mode = "v" } } },
-    { "tpope/vim-surround", event = "VeryLazy" },
-    { "tpope/vim-repeat", event = "VeryLazy" },
+    { "tpope/vim-commentary",  keys = { "gc", { "gc", mode = "v" } } },
+    { "tpope/vim-surround",    event = "VeryLazy" },
+    { "tpope/vim-repeat",      event = "VeryLazy" },
 
     -- AUTOPAIRS
-    { "windwp/nvim-autopairs", event = "InsertEnter", config = true },
+    { "windwp/nvim-autopairs", event = "InsertEnter",                config = true },
 
 }, {
     performance = {
@@ -541,3 +576,17 @@ require("lazy").setup({
     ui = { border = "rounded" },
 })
 
+
+
+-- Auto format on save
+vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = "*.c,*.h",
+    callback = function()
+        vim.lsp.buf.format()
+    end,
+})
+
+
+
+-- vim.cmd.colorscheme("kanagawa")
+vim.cmd.colorscheme("onedark")

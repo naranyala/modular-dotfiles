@@ -53,104 +53,27 @@ vim.opt.rtp:prepend(lazypath)
 -- Plugin Specifications
 --=============================================================================
 require('lazy').setup({
-    --=============================================================================
-    -- UI and Appearance
-    --=============================================================================
+
+    -- require("./_shared/missing_native_apis"),
+    -- require("./_shared/tpope_goodies"),
+    -- require("./_shared/lualine_and_theme"),
+
+
+    require("./_shared"),
+
+    -- COLORSCHEME (pick one)
     {
-        'navarasu/onedark.nvim',
+        "rebelot/kanagawa.nvim",
         priority = 1000,
         config = function()
-            vim.cmd.colorscheme('onedark')
-        end,
+            vim.cmd.colorscheme("kanagawa")
+        end
     },
 
 
-    {
-        "folke/which-key.nvim",
-        event = "VeryLazy",
-        config = function()
-            require("which-key").setup({
-                window = { border = "rounded" },
-            })
-        end,
-    },
 
-    -- Statusline
-    {
-        "nvim-lualine/lualine.nvim",
-        dependencies = {
-            -- "nvim-tree/nvim-web-devicons"
-        },
-        config = function()
-            local function file_stats()
-                local buf = vim.api.nvim_get_current_buf()
-                if vim.api.nvim_buf_get_option(buf, "buftype") ~= "" then
-                    return "" -- Skip for non-file buffers
-                end
 
-                -- Line count
-                local lines = vim.api.nvim_buf_line_count(buf)
 
-                -- Word count
-                local words = 0
-                local content = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
-                for _, line in ipairs(content) do
-                    for _ in line:gmatch("%S+") do
-                        words = words + 1
-                    end
-                end
-
-                -- Character count
-                local chars = #table.concat(content, "")
-
-                return string.format("lines %d | words %d | chars %d", lines, words, chars)
-            end
-
-            require("lualine").setup({
-                options = {
-                    theme = "auto",
-                    component_separators = "",
-                    section_separators = "",
-                    disabled_filetypes = {},
-                    globalstatus = true,
-                },
-                sections = {
-                    lualine_a = {},
-                    lualine_b = {},
-                    lualine_c = {
-                        {
-                            "filename",
-                            path = 2, -- 2 = absolute path
-                            symbols = {
-                                modified = "[+]",
-                                readonly = "[-]",
-                                unnamed = "[No Name]",
-                            },
-                        },
-                    },
-                    lualine_x = {},
-                    lualine_y = {},
-                    lualine_z = {
-                        { file_stats },
-                    },
-                },
-                inactive_sections = {
-                    lualine_a = {},
-                    lualine_b = {},
-                    lualine_c = {
-                        {
-                            "filename",
-                            path = 2, -- Absolute path for inactive buffers too
-                        },
-                    },
-                    lualine_x = {},
-                    lualine_y = {},
-                    lualine_z = {},
-                },
-                extensions = {},
-            })
-        end,
-    },
     {
         "nvim-treesitter/nvim-treesitter-context",
         config = function()
@@ -267,38 +190,6 @@ require('lazy').setup({
         end,
     },
 
-    --=============================================================================
-    -- LSP Configuration
-    --=============================================================================
-    {
-        'neovim/nvim-lspconfig',
-        dependencies = {
-            'hrsh7th/cmp-nvim-lsp',
-            'williamboman/mason.nvim',
-            'williamboman/mason-lspconfig.nvim',
-        },
-    },
-
-    {
-        'williamboman/mason.nvim',
-        config = function()
-            require('mason').setup()
-        end,
-    },
-
-    {
-        'williamboman/mason-lspconfig.nvim',
-        config = function()
-            require('mason-lspconfig').setup({
-                ensure_installed = {
-                    'clangd',        -- C/C++ LSP
-                    'rust_analyzer', -- Rust LSP
-                    'lua_ls',        -- Lua LSP
-                    'pyright',       -- Python LSP (optional)
-                },
-            })
-        end,
-    },
 
     -- Rust specific enhancements
     {
@@ -492,49 +383,6 @@ require('lazy').setup({
     },
 })
 
---=============================================================================
--- LSP Configuration
---=============================================================================
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
--- Setup LSP servers
-require('lspconfig').clangd.setup({
-    capabilities = capabilities,
-    cmd = {
-        'clangd',
-        '--background-index',
-        '--clang-tidy',
-        '--header-insertion=iwyu',
-        '--completion-style=detailed',
-        '--function-arg-placeholders',
-        '--fallback-style=llvm',
-    },
-    init_options = {
-        usePlaceholders = true,
-        completeUnimported = true,
-        clangdFileStatus = true,
-    },
-})
-
--- Rust is handled by rustaceanvim, but we can set up basic config
-require('lspconfig').rust_analyzer.setup({
-    capabilities = capabilities,
-})
-
-require('lspconfig').lua_ls.setup({
-    capabilities = capabilities,
-    settings = {
-        Lua = {
-            diagnostics = {
-                globals = { 'vim' },
-            },
-        },
-    },
-})
-
---=============================================================================
--- Debugging Configuration
---=============================================================================
 
 --=============================================================================
 -- Key Mappings
@@ -563,6 +411,11 @@ vim.keymap.set('n', '<C-Right>', ':vertical resize -2<CR>', { desc = 'Decrease w
 vim.keymap.set('n', '<S-l>', ':bnext<CR>', { desc = 'Next buffer' })
 vim.keymap.set('n', '<S-h>', ':bprevious<CR>', { desc = 'Previous buffer' })
 vim.keymap.set('n', '<leader>bd', ':bdelete<CR>', { desc = 'Delete buffer' })
+
+
+vim.keymap.set("n", "<Esc>", "<cmd>noh<CR>")
+vim.keymap.set("i", "jk", "<Esc>")
+vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>")
 
 -- LSP keymaps (will be set when LSP attaches)
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -638,45 +491,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end,
 })
 
---=============================================================================
--- Help and Documentation
---=============================================================================
 
--- Create help command
-vim.api.nvim_create_user_command('ConfigInfo', function()
-    print([[
-Neovim C/Rust Development Configuration
-======================================
-Key Features:
-- LSP support for C, C++, Rust, Lua, Python
-- Formatting with conform.nvim
-- File navigation with telescope and nvim-tree
-- Git integration with gitsigns
 
-Important Keybindings:
-<leader>e     - Toggle file explorer
-<leader>ff    - Find files
-<leader>fg    - Live grep
-<leader>fb    - Find buffers
-<F5>          - Start/continue debugging
-<F10>         - Step over
-<F11>         - Step into
-<F12>         - Step out
-<leader>db    - Toggle breakpoint
-gd            - Go to definition
-gr            - Find references
-K             - Hover documentation
-<leader>rn    - Rename symbol
-<leader>ca    - Code action
 
-Rust-specific:
-<leader>cr    - Run Rust
-<leader>ct    - Test Rust
-<leader>cc    - Check Rust
-
-C/C++-specific:
-<leader>ch    - Switch header/source
-
-For more help, check the respective plugin documentation.
-]])
-end, {})
+-- vim.cmd.colorscheme("kanagawa")
+vim.cmd.colorscheme("onedark")

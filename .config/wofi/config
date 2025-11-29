@@ -1,8 +1,0 @@
-# Wofi config
-prompt="Launch:"
-width=600
-height=400
-show_icons=true
-allow_markup=true
-insensitive=true
-hide_scroll=true

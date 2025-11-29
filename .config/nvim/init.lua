@@ -1,29 +1,12 @@
 -- SINGLE FILE NEOVIM CONFIG
 
--- require("lazy_suckless_001") -- OK
--- require("lazy_suckless_002") -- MEH
--- require("lazy_suckless_003") -- OK
--- require("lazy_suckless_004") -- MEH
--- require("lazy_suckless_005") -- BEST but bug copy/paste
--- require("lazy_suckless_006") -- MEH
-require("lazy_suckless_007") -- BEST
--- require("lazy_suckless_008") -- MEH
--- require("lazy_suckless_009") -- ERROR
--- require("lazy_suckless_010") -- ERROR
-
--- require("best_legacy/lazy_tpope_stack")
--- require("best_legacy/lazy_c_asm_toolchain")
--- require("best_legacy/lazy_tailored_cprogramming")
--- require("best_legacy/lazy_goto_definition") -- BEST
--- require("best_legacy/lazy_rustcode_focused")
--- require("best_legacy/lazy_sophisticated")
--- require("best_legacy/lazy_alternative")
--- require("best_legacy/lazy_minimalism")
+-- require("lazy_suckless_007") -- BEST
+-- require("lazy_c_asm_toolchain") -- BEST
+require("lazy_clang_rust_autoformat") -- BEST
 
 require("on_demand_fn.ok_features")
 require("on_demand_fn.ok_vue_snippets")
 require("on_demand_fn.ok_c99_snippets")
-
 
 -- require("lib_grepnav").setup()
 -- require("lib.simplenav")

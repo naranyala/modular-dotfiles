@@ -52,6 +52,18 @@ require('lazy').setup({
     --     end
     -- },
 
+
+    require("./_shared"),
+
+    -- COLORSCHEME (pick one)
+    {
+        "rebelot/kanagawa.nvim",
+        priority = 1000,
+        config = function()
+            vim.cmd.colorscheme("kanagawa")
+        end
+    },
+
     -- syntax
     {
         'nvim-treesitter/nvim-treesitter',
@@ -87,65 +99,65 @@ require('lazy').setup({
             require('fidget').setup {}
             require('mason').setup()
             require('mason-lspconfig').setup {
-                ensure_installed = { 'clangd', 'cmake', 'lua_ls'}
+                ensure_installed = { 'clangd', 'cmake', 'lua_ls' }
             }
 
             local cap = require('cmp_nvim_lsp').default_capabilities()
 
-vim.lsp.config('lua_ls', {
-  on_init = function(client)
-    if client.workspace_folders then
-      local path = client.workspace_folders[1].name
-      if
-        path ~= vim.fn.stdpath('config')
-        and (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc'))
-      then
-        return
-      end
-    end
+            vim.lsp.config('lua_ls', {
+                on_init = function(client)
+                    if client.workspace_folders then
+                        local path = client.workspace_folders[1].name
+                        if
+                            path ~= vim.fn.stdpath('config')
+                            and (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc'))
+                        then
+                            return
+                        end
+                    end
 
-    client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
-      runtime = {
-        -- Tell the language server which version of Lua you're using (most
-        -- likely LuaJIT in the case of Neovim)
-        version = 'LuaJIT',
-        -- Tell the language server how to find Lua modules same way as Neovim
-        -- (see `:h lua-module-load`)
-        path = {
-          'lua/?.lua',
-          'lua/?/init.lua',
-        },
-      },
-      -- Make the server aware of Neovim runtime files
-      workspace = {
-        checkThirdParty = false,
-        library = {
-          vim.env.VIMRUNTIME
-          -- Depending on the usage, you might want to add additional paths
-          -- here.
-          -- '${3rd}/luv/library'
-          -- '${3rd}/busted/library'
-        }
-        -- Or pull in all of 'runtimepath'.
-        -- NOTE: this is a lot slower and will cause issues when working on
-        -- your own configuration.
-        -- See https://github.com/neovim/nvim-lspconfig/issues/3189
-        -- library = {
-        --   vim.api.nvim_get_runtime_file('', true),
-        -- }
-      }
-    })
-  end,
-  settings = {
-    Lua = {}
-  }
-})
+                    client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
+                        runtime = {
+                            -- Tell the language server which version of Lua you're using (most
+                            -- likely LuaJIT in the case of Neovim)
+                            version = 'LuaJIT',
+                            -- Tell the language server how to find Lua modules same way as Neovim
+                            -- (see `:h lua-module-load`)
+                            path = {
+                                'lua/?.lua',
+                                'lua/?/init.lua',
+                            },
+                        },
+                        -- Make the server aware of Neovim runtime files
+                        workspace = {
+                            checkThirdParty = false,
+                            library = {
+                                vim.env.VIMRUNTIME
+                                -- Depending on the usage, you might want to add additional paths
+                                -- here.
+                                -- '${3rd}/luv/library'
+                                -- '${3rd}/busted/library'
+                            }
+                            -- Or pull in all of 'runtimepath'.
+                            -- NOTE: this is a lot slower and will cause issues when working on
+                            -- your own configuration.
+                            -- See https://github.com/neovim/nvim-lspconfig/issues/3189
+                            -- library = {
+                            --   vim.api.nvim_get_runtime_file('', true),
+                            -- }
+                        }
+                    })
+                end,
+                settings = {
+                    Lua = {}
+                }
+            })
 
 
             -- Clangd with enhanced settings
             -- require('lspconfig').clangd.setup {
 
-vim.lsp.config('clangd', {
+            vim.lsp.config('clangd', {
 
                 cmd = {
                     'clangd',
@@ -161,15 +173,18 @@ vim.lsp.config('clangd', {
                     completeUnimported = true,
                     clangdFileStatus = true,
                 },
- on_attach = function(client, bufnr)
-    -- Example keymap to show hover info
-    vim.keymap.set('n', 'K', vim.lsp.buf.hover, { buffer = bufnr, desc = "LSP Hover" })
+                on_attach = function(client, bufnr)
+                    -- Example keymap to show hover info
+                    vim.keymap.set('n', 'K', vim.lsp.buf.hover, { buffer = bufnr, desc = "LSP Hover" })
 
-    -- Example: Show diagnostics in a floating window
-    vim.keymap.set('n', '<space>i', vim.diagnostic.open_float, { buffer = bufnr, desc = "Open Diagnostic Float" })
-    vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { buffer = bufnr, desc = "Go to Previous Diagnostic" })
-    vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { buffer = bufnr, desc = "Go to Next Diagnostic" })
-  end,
+                    -- Example: Show diagnostics in a floating window
+                    vim.keymap.set('n', '<space>i', vim.diagnostic.open_float,
+                        { buffer = bufnr, desc = "Open Diagnostic Float" })
+                    vim.keymap.set('n', '[d', vim.diagnostic.goto_prev,
+                        { buffer = bufnr, desc = "Go to Previous Diagnostic" })
+                    vim.keymap.set('n', ']d', vim.diagnostic.goto_next,
+                        { buffer = bufnr, desc = "Go to Next Diagnostic" })
+                end,
             })
 
             -- Asm LSP (if available)
@@ -260,9 +275,9 @@ vim.lsp.config('clangd', {
     -- finder
     {
         'nvim-telescope/telescope.nvim',
-        dependencies = { 
-		{'nvim-lua/plenary.nvim'},
-		{'nvim-telescope/telescope-fzf-native.nvim', build = 'make'}
+        dependencies = {
+            { 'nvim-lua/plenary.nvim' },
+            { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' }
         },
         keys = {
             { '<leader>ff', '<cmd>Telescope find_files<cr>',  desc = 'Find files' },
@@ -273,22 +288,22 @@ vim.lsp.config('clangd', {
             { '<leader>fc', '<cmd>Telescope grep_string<cr>', desc = 'Grep cursor word' },
         },
         config = function()
--- You dont need to set any of these options. These are the default ones. Only
--- the loading is important
-require('telescope').setup {
-  extensions = {
-    fzf = {
-      fuzzy = true,                    -- false will only do exact matching
-      override_generic_sorter = true,  -- override the generic sorter
-      override_file_sorter = true,     -- override the file sorter
-      case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
-                                       -- the default case_mode is "smart_case"
-    }
-  }
-}
--- To get fzf loaded and working with telescope, you need to call
--- load_extension, somewhere after setup function:
-require('telescope').load_extension('fzf')
+            -- You dont need to set any of these options. These are the default ones. Only
+            -- the loading is important
+            require('telescope').setup {
+                extensions = {
+                    fzf = {
+                        fuzzy = true,                   -- false will only do exact matching
+                        override_generic_sorter = true, -- override the generic sorter
+                        override_file_sorter = true,    -- override the file sorter
+                        case_mode = "smart_case",       -- or "ignore_case" or "respect_case"
+                        -- the default case_mode is "smart_case"
+                    }
+                }
+            }
+            -- To get fzf loaded and working with telescope, you need to call
+            -- load_extension, somewhere after setup function:
+            require('telescope').load_extension('fzf')
         end
     },
 
@@ -368,20 +383,6 @@ require('telescope').load_extension('fzf')
         end
     },
 
-    -- which-key (shows keybindings)
-    {
-        'folke/which-key.nvim',
-        event = 'VeryLazy',
-        config = function()
-            require('which-key').setup()
-            require('which-key').add({
-                { '<leader>f', group = 'Find' },
-                { '<leader>h', group = 'Git Hunk' },
-                { '<leader>c', group = 'Code' },
-                { '<leader>r', group = 'Rename' },
-            })
-        end
-    },
 
     -- extras
     {
@@ -401,81 +402,7 @@ require('telescope').load_extension('fzf')
         end
     },
 
-    {
-        "nvim-lualine/lualine.nvim",
-        dependencies = {
-            -- "nvim-tree/nvim-web-devicons"
-        },
-        config = function()
-            local function file_stats()
-                local buf = vim.api.nvim_get_current_buf()
-                if vim.api.nvim_buf_get_option(buf, "buftype") ~= "" then
-                    return "" -- Skip for non-file buffers
-                end
 
-                -- Line count
-                local lines = vim.api.nvim_buf_line_count(buf)
-
-                -- Word count
-                local words = 0
-                local content = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
-                for _, line in ipairs(content) do
-                    for _ in line:gmatch("%S+") do
-                        words = words + 1
-                    end
-                end
-
-                -- Character count
-                local chars = #table.concat(content, "")
-
-                return string.format("lines %d | words %d | chars %d", lines, words, chars)
-            end
-
-            require("lualine").setup({
-                options = {
-                    theme = "auto",
-                    component_separators = "",
-                    section_separators = "",
-                    disabled_filetypes = {},
-                    globalstatus = true,
-                },
-                sections = {
-                    lualine_a = {},
-                    lualine_b = {},
-                    lualine_c = {
-                        {
-                            "filename",
-                            path = 2, -- 2 = absolute path
-                            symbols = {
-                                modified = "[+]",
-                                readonly = "[-]",
-                                unnamed = "[No Name]",
-                            },
-                        },
-                    },
-                    lualine_x = {},
-                    lualine_y = {},
-                    lualine_z = {
-                        { file_stats },
-                    },
-                },
-                inactive_sections = {
-                    lualine_a = {},
-                    lualine_b = {},
-                    lualine_c = {
-                        {
-                            "filename",
-                            path = 2, -- Absolute path for inactive buffers too
-                        },
-                    },
-                    lualine_x = {},
-                    lualine_y = {},
-                    lualine_z = {},
-                },
-                extensions = {},
-            })
-        end,
-    },
     {
         "nvim-treesitter/nvim-treesitter-context",
         config = function()
@@ -491,13 +418,13 @@ require('telescope').load_extension('fzf')
             require('gitsigns').setup()
         end,
     },
-    {
-        "folke/tokyonight.nvim",
-        priority = 1000,
-        config = function()
-            vim.cmd.colorscheme("tokyonight")
-        end,
-    },
+    -- {
+    --     "folke/tokyonight.nvim",
+    --     priority = 1000,
+    --     config = function()
+    --         vim.cmd.colorscheme("tokyonight")
+    --     end,
+    -- },
 
 
     -- hex editor
@@ -517,13 +444,13 @@ require('telescope').load_extension('fzf')
         end
     },
 
-{
-  'gelguy/wilder.nvim',
-  config = function()
-local wilder = require('wilder')
-wilder.setup({modes = {':', '/', '?'}})
-  end,
-},
+    {
+        'gelguy/wilder.nvim',
+        config = function()
+            local wilder = require('wilder')
+            wilder.setup({ modes = { ':', '/', '?' } })
+        end,
+    },
 
     -- better quickfix
     { 'kevinhwang91/nvim-bqf' },
@@ -531,131 +458,145 @@ wilder.setup({modes = {':', '/', '?'}})
     -- LSP progress
     { 'j-hui/fidget.nvim',    opts = {} },
 
-    {'mhartington/formatter.nvim', config = function() 
--- Utilities for creating configurations
-local util = require "formatter.util"
+    {
+        'mhartington/formatter.nvim',
+        config = function()
+            -- Utilities for creating configurations
+            local util = require "formatter.util"
 
--- Provides the Format, FormatWrite, FormatLock, and FormatWriteLock commands
-require("formatter").setup {
-  -- Enable or disable logging
-  logging = true,
-  -- Set the log level
-  log_level = vim.log.levels.WARN,
-  -- All formatter configurations are opt-in
-  filetype = {
-    -- Formatter configurations for filetype "lua" go here
-    -- and will be executed in order
-    lua = {
-      -- "formatter.filetypes.lua" defines default configurations for the
-      -- "lua" filetype
-      require("formatter.filetypes.lua").stylua,
+            -- Provides the Format, FormatWrite, FormatLock, and FormatWriteLock commands
+            require("formatter").setup {
+                -- Enable or disable logging
+                logging = true,
+                -- Set the log level
+                log_level = vim.log.levels.WARN,
+                -- All formatter configurations are opt-in
+                filetype = {
+                    -- Formatter configurations for filetype "lua" go here
+                    -- and will be executed in order
+                    lua = {
+                        -- "formatter.filetypes.lua" defines default configurations for the
+                        -- "lua" filetype
+                        require("formatter.filetypes.lua").stylua,
 
-      -- You can also define your own configuration
-      function()
-        -- Supports conditional formatting
-        if util.get_current_buffer_file_name() == "special.lua" then
-          return nil
+                        -- You can also define your own configuration
+                        function()
+                            -- Supports conditional formatting
+                            if util.get_current_buffer_file_name() == "special.lua" then
+                                return nil
+                            end
+
+                            -- Full specification of configurations is down below and in Vim help
+                            -- files
+                            return {
+                                exe = "stylua",
+                                args = {
+                                    "--search-parent-directories",
+                                    "--stdin-filepath",
+                                    util.escape_path(util.get_current_buffer_file_path()),
+                                    "--",
+                                    "-",
+                                },
+                                stdin = true,
+                            }
+                        end
+                    },
+
+                    -- Use the special "*" filetype for defining formatter configurations on
+                    -- any filetype
+                    ["*"] = {
+                        -- "formatter.filetypes.any" defines default configurations for any
+                        -- filetype
+                        require("formatter.filetypes.any").remove_trailing_whitespace,
+                        -- Remove trailing whitespace without 'sed'
+                        -- require("formatter.filetypes.any").substitute_trailing_whitespace,
+                    }
+                }
+            }
         end
-
-        -- Full specification of configurations is down below and in Vim help
-        -- files
-        return {
-          exe = "stylua",
-          args = {
-            "--search-parent-directories",
-            "--stdin-filepath",
-            util.escape_path(util.get_current_buffer_file_path()),
-            "--",
-            "-",
-          },
-          stdin = true,
-        }
-      end
     },
 
-    -- Use the special "*" filetype for defining formatter configurations on
-    -- any filetype
-    ["*"] = {
-      -- "formatter.filetypes.any" defines default configurations for any
-      -- filetype
-      require("formatter.filetypes.any").remove_trailing_whitespace,
-      -- Remove trailing whitespace without 'sed'
-      -- require("formatter.filetypes.any").substitute_trailing_whitespace,
-    }
-  }
-}
-    end },
-
-    {'ray-x/cmp-treesitter', config = function() 
-require('cmp').setup {
-  sources = {
-    { name = 'treesitter' }
-  }
-}
-    end},
-
-    {'preservim/tagbar'},
-    -- {'itchyny/lightline.vim'}
-    {'mhinz/vim-startify'},
-{
-  "rmagatti/goto-preview",
-  dependencies = { "rmagatti/logger.nvim" },
-  event = "BufEnter",
-  -- config = true, -- necessary as per https://github.com/rmagatti/goto-preview/issues/88
-config = function() 
-require('goto-preview').setup {
-  width = 120, -- Width of the floating window
-  height = 15, -- Height of the floating window
-  border = {"↖", "─" ,"┐", "│", "┘", "─", "└", "│"}, -- Border characters of the floating window
-  default_mappings = false, -- Bind default mappings
-  debug = false, -- Print debug information
-  opacity = nil, -- 0-100 opacity level of the floating window where 100 is fully transparent.
-  resizing_mappings = false, -- Binds arrow keys to resizing the floating window.
-  post_open_hook = nil, -- A function taking two arguments, a buffer and a window to be ran as a hook.
-  post_close_hook = nil, -- A function taking two arguments, a buffer and a window to be ran as a hook.
-  references = { -- Configure the telescope UI for slowing the references cycling window.
-    provider = "telescope", -- telescope|fzf_lua|snacks|mini_pick|default
-    telescope = require("telescope.themes").get_dropdown({ hide_preview = false })
-  },
-  -- These two configs can also be passed down to the goto-preview definition and implementation calls for one off "peak" functionality.
-  focus_on_open = true, -- Focus the floating window when opening it.
-  dismiss_on_move = false, -- Dismiss the floating window when moving the cursor.
-  force_close = true, -- passed into vim.api.nvim_win_close's second argument. See :h nvim_win_close
-  bufhidden = "wipe", -- the bufhidden option to set on the floating window. See :h bufhidden
-  stack_floating_preview_windows = true, -- Whether to nest floating windows
-  same_file_float_preview = true, -- Whether to open a new floating window for a reference within the current file
-  preview_window_title = { enable = true, position = "left" }, -- Whether to set the preview window title as the filename
-  zindex = 1, -- Starting zindex for the stack of floating windows
-  vim_ui_input = true, -- Whether to override vim.ui.input with a goto-preview floating window
- 
-}
+    {
+        'ray-x/cmp-treesitter',
+        config = function()
+            require('cmp').setup {
+                sources = {
+                    { name = 'treesitter' }
+                }
+            }
         end
-},
+    },
+
+    { 'preservim/tagbar' },
+    -- {'itchyny/lightline.vim'}
+    { 'mhinz/vim-startify' },
+    {
+        "rmagatti/goto-preview",
+        dependencies = { "rmagatti/logger.nvim" },
+        event = "BufEnter",
+        -- config = true, -- necessary as per https://github.com/rmagatti/goto-preview/issues/88
+        config = function()
+            require('goto-preview').setup {
+                width = 120, -- Width of the floating window
+                height = 15, -- Height of the floating window
+                border = { "↖", "─", "┐", "│", "┘", "─", "└", "│" }, -- Border characters of the floating window
+                default_mappings = false, -- Bind default mappings
+                debug = false, -- Print debug information
+                opacity = nil, -- 0-100 opacity level of the floating window where 100 is fully transparent.
+                resizing_mappings = false, -- Binds arrow keys to resizing the floating window.
+                post_open_hook = nil, -- A function taking two arguments, a buffer and a window to be ran as a hook.
+                post_close_hook = nil, -- A function taking two arguments, a buffer and a window to be ran as a hook.
+                references = { -- Configure the telescope UI for slowing the references cycling window.
+                    provider = "telescope", -- telescope|fzf_lua|snacks|mini_pick|default
+                    telescope = require("telescope.themes").get_dropdown({ hide_preview = false })
+                },
+                -- These two configs can also be passed down to the goto-preview definition and implementation calls for one off "peak" functionality.
+                focus_on_open = true,                                        -- Focus the floating window when opening it.
+                dismiss_on_move = false,                                     -- Dismiss the floating window when moving the cursor.
+                force_close = true,                                          -- passed into vim.api.nvim_win_close's second argument. See :h nvim_win_close
+                bufhidden = "wipe",                                          -- the bufhidden option to set on the floating window. See :h bufhidden
+                stack_floating_preview_windows = true,                       -- Whether to nest floating windows
+                same_file_float_preview = true,                              -- Whether to open a new floating window for a reference within the current file
+                preview_window_title = { enable = true, position = "left" }, -- Whether to set the preview window title as the filename
+                zindex = 1,                                                  -- Starting zindex for the stack of floating windows
+                vim_ui_input = true,                                         -- Whether to override vim.ui.input with a goto-preview floating window
+
+            }
+        end
+    },
 
 
-    {'cocopon/iceberg.vim', config = function() 
+    {
+        'cocopon/iceberg.vim',
+        config = function()
             vim.cmd("colorscheme iceberg")
-    end},
+        end
+    },
 
 
-    {'sainnhe/gruvbox-material', config = function() 
+    {
+        'sainnhe/gruvbox-material',
+        config = function()
             -- vim.cmd("colorscheme gruvbox-material")
-    end},
+        end
+    },
 
-    {'nathanaelkane/vim-indent-guides', config = function() 
+    {
+        'nathanaelkane/vim-indent-guides',
+        config = function()
 
+        end
+    },
 
-    end},
+    { 'luochen1990/rainbow' },
 
-    {'luochen1990/rainbow'},
-
-{
-  "ray-x/lsp_signature.nvim",
-  event = "InsertEnter",
-  opts = {
-    -- cfg options
-  },
-}
+    {
+        "ray-x/lsp_signature.nvim",
+        event = "InsertEnter",
+        opts = {
+            -- cfg options
+        },
+    }
 
 
 
@@ -749,6 +690,11 @@ vim.keymap.set('n', '<C-u>', '<C-u>zz')
 vim.keymap.set('n', 'n', 'nzzzv')
 vim.keymap.set('n', 'N', 'Nzzzv')
 
+
+vim.keymap.set("n", "<Esc>", "<cmd>noh<CR>")
+vim.keymap.set("i", "jk", "<Esc>")
+vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>")
+
 -- Terminal mode escape
 vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
@@ -801,55 +747,7 @@ vim.api.nvim_create_autocmd('BufWritePre', {
     end,
 })
 
--- -------------------- HELP --------------------
-vim.api.nvim_create_user_command('ConfigHelp', function()
-    print [[
-C / Assembly Neovim Quick Reference
-====================================
-BUILD:
-:Make               compile current file
-:Run                run compiled executable
-:Clean              remove build artifacts
 
-NAVIGATION:
-gd                  goto definition
-gD                  goto declaration
-gr                  references
-gi                  goto implementation
-K                   hover info
-<C-k>               signature help
 
-QUICKFIX:
-]q / [q             next/prev error
-<leader>q           open quickfix
-<leader>Q           close quickfix
-
-FILES:
-<leader>e           toggle file explorer
-<leader>E           find current file in explorer
-<leader>ff          find files
-<leader>fg          live grep
-<leader>fb          buffers
-<leader>fr          recent files
-
-CODE:
-<leader>ca          code action
-<leader>cf          format
-<leader>rn          rename
-<leader>cd          line diagnostics
-]d / [d             next/prev diagnostic
-
-GIT:
-]c / [c             next/prev hunk
-<leader>hs          stage hunk
-<leader>hr          reset hunk
-<leader>hp          preview hunk
-<leader>hb          blame line
-
-BUFFERS/WINDOWS:
-<S-h> / <S-l>       prev/next buffer
-<leader>bd          close buffer
-<C-h/j/k/l>         navigate windows
-<C-arrows>          resize windows
-]]
-end, {})
+-- vim.cmd.colorscheme("kanagawa")
+vim.cmd.colorscheme("onedark")
