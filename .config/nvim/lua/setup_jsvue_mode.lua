@@ -401,11 +401,7 @@ vim.opt.rtp:prepend(lazypath)
 --------------------------------------------------------------------------------
 require("lazy").setup({
 
-    -- require("./_shared/missing_native_apis"),
-    -- require("./_shared/tpope_goodies"),
-    -- require("./_shared/lualine_and_theme"),
-
-    require("./_shared"),
+    require("./_shared_module"),
 
 
     -- COLORSCHEME (pick one)

@@ -1,8 +1,11 @@
 
 #!/usr/bin/bash
 
+USER=$(whoami)
+
 # DOT_PATH="/media/naranyala/Data/projects-remote/modular-dotfiles"
-DOT_PATH="/run/media/naranyala/Data/projects-remote/modular-dotfiles"
+# DOT_PATH="/run/media/naranyala/Data/projects-remote/modular-dotfiles"
+DOT_PATH="/run/media/$(USER)/Data/projects-remote/modular-dotfiles"
 # DOT_PATH="/run/media/naranyala/Data/projects-remote/suckless-neovim-propaganda"
 # DOT_PATH="/media/naranyala/Data1/projects-remote/modular-dotfiles"
 
