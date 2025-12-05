@@ -59,7 +59,7 @@ return {
                 ensure_installed = {
                     'cmake',
                     'clangd',
-                    -- 'rust-analyzer',
+                    'zls',
                     'rust_analyzer',
                     'lua_ls',
                     'ts_ls',
@@ -98,6 +98,16 @@ return {
                     completeUnimported = true,
                     clangdFileStatus = true,
                 },
+            })
+
+            vim.lsp.config('zls', {
+                cmd = { "zls" }, -- Ensure 'zls' is in your PATH
+                on_attach = function(client, bufnr)
+                    -- Example: keybindings for LSP
+                    local opts = { noremap = true, silent = true }
+                    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+                    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+                end,
             })
 
 

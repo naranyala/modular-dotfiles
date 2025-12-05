@@ -53,7 +53,9 @@ require('lazy').setup({
     -- },
 
 
+    require("./_shared_before_lazy"),
     require("./_shared_module"),
+    require("./_shared_after_lazy"),
 
     -- COLORSCHEME (pick one)
     {

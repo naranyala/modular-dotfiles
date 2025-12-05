@@ -1,0 +1,7 @@
+local hunk = vim.fn.tempname()
+vim.cmd('silent w '..hunk..'.new')
+vim.cmd('silent !git show HEAD:% > '..hunk..'.old')
+vim.system({'spell-diff', hunk..'.old', hunk..'.new'}, {}, function(obj)
+  vim.notify(obj.stdout)
+  vim.fn.delete(hunk..'.old') vim.fn.delete(hunk..'.new')
+end)

@@ -4,6 +4,9 @@
 -- require("setup_casm_mode") -- BEST
 require("setup_crust_mode") -- BEST
 
+require("lib.gittutor").setup()
+require("lib.linuxtutor").setup()
+
 require("lib.ok_features")
 require("lib.ok_vue_snippets")
 require("lib.ok_c99_snippets")
@@ -14,7 +17,8 @@ require("lib.ok_c99_snippets")
 -- require("lib.theme_paperlike_day").setup()
 -- require("lib.theme_paperlike_night").setup()
 
-require("lib.bookmark").setup()
+require("lib.bookmark_by_line").setup()
+-- require("lib.bookmark_by_file").setup()
 require("lib.disable_tabline")
 require("lib.ag_filepicker")
 require("lib.todo_search").setup()
