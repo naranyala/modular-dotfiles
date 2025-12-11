@@ -28,24 +28,25 @@ return {
     { "tpope/vim-sleuth" }, -- Auto-detect indentation
 
 
-    -- { "rebelot/kanagawa.nvim", priority = 1000,
-    --     config = function() vim.cmd.colorscheme("kanagawa") end
+    {
+        "rebelot/kanagawa.nvim",
+        priority = 1000,
+        config = function()
+            vim.cmd.colorscheme("kanagawa")
+        end
+    },
+
+    -- {
+    --     'navarasu/onedark.nvim',
+    --     priority = 1000,
+    --     config = function()
+    --         vim.cmd.colorscheme('onedark')
+    --     end,
     -- },
 
     {
-        'navarasu/onedark.nvim',
-        priority = 1000,
-        config = function()
-            vim.cmd.colorscheme('onedark')
-        end,
-    },
-
-
-
-
-    -- LSP
-    {
         'neovim/nvim-lspconfig',
+        enabled = false,
         dependencies = {
             'williamboman/mason.nvim',
             'williamboman/mason-lspconfig.nvim',
@@ -298,7 +299,7 @@ return {
         dependencies = { "nvim-lua/plenary.nvim" },
         config = function()
             local builtin = require("telescope.builtin")
-            vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Find files" })
+            -- vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Find files" })
             vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Live grep" })
             vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Find buffers" })
             vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Help tags" })
@@ -338,6 +339,7 @@ return {
 
     {
         "nvim-lualine/lualine.nvim",
+        enabled = true,
         dependencies = {
             -- "nvim-tree/nvim-web-devicons"
         },
@@ -412,6 +414,172 @@ return {
         end,
     },
 
+    {
+        'numToStr/Comment.nvim',
+        config = function()
+            require('Comment').setup()
+        end,
+    },
+
+    {
+        'hrsh7th/nvim-cmp',
+        dependencies = {
+            'hrsh7th/cmp-nvim-lsp',
+            'hrsh7th/cmp-buffer',
+            'hrsh7th/cmp-path',
+            'hrsh7th/cmp-cmdline',
+            'L3MON4D3/LuaSnip',
+            'saadparwaiz1/cmp_luasnip',
+        },
+        config = function()
+            local cmp = require('cmp')
+            local luasnip = require('luasnip')
+
+            cmp.setup({
+                snippet = {
+                    expand = function(args)
+                        luasnip.lsp_expand(args.body)
+                    end,
+                },
+                mapping = cmp.mapping.preset.insert({
+                    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+                    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+                    ['<C-Space>'] = cmp.mapping.complete(),
+                    ['<C-e>'] = cmp.mapping.abort(),
+                    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+                    ['<Tab>'] = cmp.mapping(function(fallback)
+                        if cmp.visible() then
+                            cmp.select_next_item()
+                        elseif luasnip.expand_or_jumpable() then
+                            luasnip.expand_or_jump()
+                        else
+                            fallback()
+                        end
+                    end, { 'i', 's' }),
+                    ['<S-Tab>'] = cmp.mapping(function(fallback)
+                        if cmp.visible() then
+                            cmp.select_prev_item()
+                        elseif luasnip.jumpable(-1) then
+                            luasnip.jump(-1)
+                        else
+                            fallback()
+                        end
+                    end, { 'i', 's' }),
+                }),
+                sources = cmp.config.sources({
+                    { name = 'nvim_lsp' },
+                    { name = 'luasnip' },
+                }, {
+                    { name = 'buffer' },
+                    { name = 'path' },
+                }),
+            })
+        end,
+    },
+
+    {
+        "nvim-treesitter/nvim-treesitter-context",
+        config = function()
+            require 'treesitter-context'.setup {
+                enable = true,
+                max_lines = 3,
+            }
+        end,
+    },
+    {
+        'dmtrKovalenko/fff.nvim',
+        build = function()
+            -- this will download prebuild binary or try to use existing rustup toolchain to build from source
+            -- (if you are using lazy you can use gb for rebuilding a plugin if needed)
+            require("fff.download").download_or_build_binary()
+        end,
+        -- if you are using nixos
+        -- build = "nix run .#release",
+        opts = {                    -- (optional)
+            debug = {
+                enabled = true,     -- we expect your collaboration at least during the beta
+                show_scores = true, -- to help us optimize the scoring system, feel free to share your scores!
+            },
+        },
+        -- No need to lazy-load with lazy.nvim.
+        -- This plugin initializes itself lazily.
+        lazy = false,
+        keys = {
+            {
+                "ff", -- try it if you didn't it is a banger keybinding for a picker
+                function() require('fff').find_files() end,
+                desc = 'FFFind files',
+            }
+        },
+        config = function()
+            require('fff').setup({
+                base_path = vim.fn.getcwd(),
+                prompt = '🪿 ',
+                title = 'FFFiles',
+                max_results = 100,
+                max_threads = 4,
+                lazy_sync = true, -- set to false if you want file indexing to start on open
+                layout = {
+                    height = 0.8,
+                    width = 0.8,
+                    prompt_position = 'bottom', -- or 'top'
+                    preview_position = 'right', -- or 'left', 'right', 'top', 'bottom'
+                    preview_size = 0.5,
+                },
+                preview = {
+                    enabled = true,
+                    max_size = 10 * 1024 * 1024,  -- Do not try to read files larger than 10MB
+                    chunk_size = 8192,            -- Bytes per chunk for dynamic loading (8kb - fits ~100-200 lines)
+                    binary_file_threshold = 1024, -- amount of bytes to scan for binary content (set 0 to disable)
+                    imagemagick_info_format_str = '%m: %wx%h, %[colorspace], %q-bit',
+                    line_numbers = false,
+                    wrap_lines = false,
+                    show_file_info = true,
+                    filetypes = {
+                        svg = { wrap_lines = true },
+                        markdown = { wrap_lines = true },
+                        text = { wrap_lines = true },
+                    },
+                },
+                keymaps = {
+                    close = '<Esc>',
+                    select = '<CR>',
+                    select_split = '<C-s>',
+                    select_vsplit = '<C-v>',
+                    select_tab = '<C-t>',
+                    move_up = { '<Up>', '<C-p>' },
+                    move_down = { '<Down>', '<C-n>' },
+                    preview_scroll_up = '<C-u>',
+                    preview_scroll_down = '<C-d>',
+                    toggle_debug = '<F2>',
+                },
+                hl = {
+                    border = 'FloatBorder',
+                    normal = 'Normal',
+                    cursor = 'CursorLine',
+                    matched = 'IncSearch',
+                    title = 'Title',
+                    prompt = 'Question',
+                    active_file = 'Visual',
+                    frecency = 'Number',
+                    debug = 'Comment',
+                },
+                frecency = {
+                    enabled = true,
+                    db_path = vim.fn.stdpath('cache') .. '/fff_nvim',
+                },
+                debug = {
+                    enabled = false, -- Set to true to show scores in the UI
+                    show_scores = false,
+                },
+                logging = {
+                    enabled = true,
+                    log_file = vim.fn.stdpath('log') .. '/fff.log',
+                    log_level = 'info',
+                }
+            })
+        end
+    }
 
 
 }

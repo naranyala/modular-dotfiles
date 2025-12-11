@@ -42,20 +42,10 @@ vim.opt.rtp:prepend(lazypath)
 
 -- -------------------- PLUGIN SPEC --------------------
 require('lazy').setup({
-    -- colors
-    -- {
-    --     'navarasu/onedark.nvim',
-    --     priority = 1000,
-    --     config = function()
-    --         require('onedark').setup { style = 'darker' }
-    --         vim.cmd.colorscheme('onedark')
-    --     end
-    -- },
 
 
-    require("./_shared_before_lazy"),
-    require("./_shared_module"),
-    require("./_shared_after_lazy"),
+    require("./_shared_other_modules"),
+    require("./_shared_mason_lsp_treesitter"),
 
     -- COLORSCHEME (pick one)
     {

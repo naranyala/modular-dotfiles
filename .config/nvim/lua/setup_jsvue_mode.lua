@@ -401,9 +401,8 @@ vim.opt.rtp:prepend(lazypath)
 --------------------------------------------------------------------------------
 require("lazy").setup({
 
-    require("./_shared_before_lazy"),
-    require("./_shared_module"),
-    require("./_shared_after_lazy"),
+    require("./_shared_other_modules"),
+    require("./_shared_mason_lsp_treesitter"),
 
 
     -- COLORSCHEME (pick one)

@@ -55,9 +55,9 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
 
 
-    require("./_shared_before_lazy"),
-    require("./_shared_module"),
-    require("./_shared_after_lazy"),
+    require("./_shared_other_modules"),
+    require("./_shared_mason_lsp_treesitter"),
+
 
     -- COLORSCHEME (pick one)
     {
@@ -157,36 +157,6 @@ require('lazy').setup({
     --     end,
     -- },
     --
-    --=============================================================================
-    -- Treesitter for syntax highlighting
-    --=============================================================================
-    {
-        'nvim-treesitter/nvim-treesitter',
-        build = ':TSUpdate',
-        config = function()
-            require('nvim-treesitter.configs').setup({
-                ensure_installed = {
-                    'c', 'cpp', 'rust', 'lua', 'vim', 'vimdoc', 'query',
-                    'javascript', 'typescript', 'python', 'go'
-                },
-                highlight = {
-                    enable = true,
-                },
-                indent = {
-                    enable = true,
-                },
-                incremental_selection = {
-                    enable = true,
-                    keymaps = {
-                        init_selection = '<c-space>',
-                        node_incremental = '<c-space>',
-                        scope_incremental = '<c-s>',
-                        node_decremental = '<c-backspace>',
-                    },
-                },
-            })
-        end,
-    },
 
 
     -- Rust specific enhancements
@@ -295,6 +265,17 @@ require('lazy').setup({
         end,
     },
 
+    {
+        "nvim-treesitter/nvim-treesitter-context",
+        config = function()
+            require 'treesitter-context'.setup {
+                enable = true,
+                max_lines = 3,
+            }
+        end,
+    },
+
+
     --=============================================================================
     -- File Finding and Navigation
     --=============================================================================
@@ -363,12 +344,6 @@ require('lazy').setup({
     --=============================================================================
     -- Comments
     --=============================================================================
-    {
-        'numToStr/Comment.nvim',
-        config = function()
-            require('Comment').setup()
-        end,
-    },
 
     --=============================================================================
     -- Auto Pairs

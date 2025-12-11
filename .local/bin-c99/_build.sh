@@ -3,5 +3,5 @@
 # clang -o dirnav dirnav.c
 # gcc -o dirnav dirnav.c
 
-zig build-exe dirnav.zig -lc -I /usr/include -L /usr/lib
-
+zig cc -o dirnav dirnav.c 
+zig cc -o libget_vcpkg libget_vcpkg.c 
