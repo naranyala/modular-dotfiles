@@ -1,0 +1,12 @@
+[package]
+name = "cli_mergepdf"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+clap = { version = "4", features = ["derive"] }
+colored = "2"
+walkdir = "2"
+lopdf = "0.33"
+pdf = "0.9.0"
+printpdf = "0.8.2"
