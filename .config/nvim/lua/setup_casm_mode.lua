@@ -742,4 +742,4 @@ vim.api.nvim_create_autocmd('BufWritePre', {
 
 
 -- vim.cmd.colorscheme("kanagawa")
-vim.cmd.colorscheme("onedark")
+-- vim.cmd.colorscheme("onedark")

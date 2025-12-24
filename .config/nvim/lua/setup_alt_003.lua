@@ -52,9 +52,9 @@ vim.cmd([[
 require("lazy").setup({
 
   require("_shared_other_modules"),
-  -- require("_shared_mason_lsp_treesitter"),
+  require("_shared_mason_lsp_treesitter"),
   -- require("_shared_mason_lsp_treesitter2"),
-  require("_shared_mason_lsp_treesitter3"),
+  -- require("_shared_mason_lsp_treesitter3"),
 
 
   -- Colorscheme (minimal, fast)
@@ -116,7 +116,7 @@ require("lazy").setup({
     config = function()
       local builtin = require("telescope.builtin")
       vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Find files" })
-      vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Live grep" })
+      -- vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Live grep" })
       vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Find buffers" })
       vim.keymap.set("n", "gd", builtin.lsp_definitions, { desc = "Go to definition" })
       vim.keymap.set("n", "gr", builtin.lsp_references, { desc = "References" })

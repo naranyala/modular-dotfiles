@@ -45,9 +45,9 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
 
   require("_shared_other_modules"),
-  -- require("_shared_mason_lsp_treesitter"),
+  require("_shared_mason_lsp_treesitter"),
   -- require("_shared_mason_lsp_treesitter2"),
-  require("_shared_mason_lsp_treesitter3"),
+  -- require("_shared_mason_lsp_treesitter3"),
 
   -- colours & eye-candy
   { 'folke/tokyonight.nvim', priority = 1000, config = function() vim.cmd.colorscheme 'tokyonight-night' end },

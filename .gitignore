@@ -3,3 +3,4 @@ temp
 
 
 packages/**/target
+packages/**/node_modules

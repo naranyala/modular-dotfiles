@@ -19,9 +19,9 @@ require("lazy").setup({
 
 
   require("_shared_other_modules"),
-  -- require("_shared_mason_lsp_treesitter"),
+  require("_shared_mason_lsp_treesitter"),
   -- require("_shared_mason_lsp_treesitter2"),
-  require("_shared_mason_lsp_treesitter3"),
+  -- require("_shared_mason_lsp_treesitter3"),
 
 
   -- Performance

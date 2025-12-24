@@ -31,7 +31,7 @@ return {
         "clangd",        -- C/C++/CUDA
         "zls",           -- Zig
         "rust_analyzer", -- Rust
-        "cmake",         -- CMake
+        -- "cmake",         -- CMake
         -- "asm_lsp",       -- Assembly (x86/ARM/RISC-V)
       },
       automatic_installation = true,
@@ -46,7 +46,7 @@ return {
     cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
     keys = {
       { "<c-space>", desc = "Increment selection" },
-      { "<bs>", desc = "Decrement selection", mode = "x" },
+      { "<bs>",      desc = "Decrement selection", mode = "x" },
     },
     opts = {
       ensure_installed = {
@@ -55,11 +55,12 @@ return {
         "zig", "rust", "asm",
 
         -- Build systems & scripting
-        "bash", "make", "cmake", "meson",
+        "bash", "make", 
+        -- "cmake", "meson",
 
         -- Embedded/Kernel
-        "devicetree",  -- DTS files
-        "kconfig",     -- Linux Kconfig
+        "devicetree",   -- DTS files
+        "kconfig",      -- Linux Kconfig
         "linkerscript", -- LD scripts
 
         -- DevOps
@@ -89,16 +90,16 @@ return {
     config = function(_, opts)
       require("nvim-treesitter.configs").setup(opts)
 
-      -- C3 external grammar (not in default registry)
-      local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
-      parser_config.c3 = {
-        install_info = {
-          url = "https://github.com/c3lang/tree-sitter-c3",
-          files = { "src/parser.c", "src/scanner.c" },
-          branch = "main",
-        },
-        filetype = "c3",
-      }
+      -- -- C3 external grammar (not in default registry)
+      -- local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+      -- parser_config.c3 = {
+      --   install_info = {
+      --     url = "https://github.com/c3lang/tree-sitter-c3",
+      --     files = { "src/parser.c", "src/scanner.c" },
+      --     branch = "main",
+      --   },
+      --   filetype = "c3",
+      -- }
     end,
   },
 
@@ -111,18 +112,18 @@ return {
       "williamboman/mason-lspconfig.nvim",
     },
     keys = {
-      { "gd", vim.lsp.buf.definition, desc = "Go to definition" },
-      { "gD", vim.lsp.buf.declaration, desc = "Go to declaration" },
-      { "gr", vim.lsp.buf.references, desc = "References" },
-      { "gi", vim.lsp.buf.implementation, desc = "Implementation" },
-      { "gt", vim.lsp.buf.type_definition, desc = "Type definition" },
-      { "K", vim.lsp.buf.hover, desc = "Hover docs" },
-      { "<leader>rn", vim.lsp.buf.rename, desc = "Rename" },
-      { "<leader>ca", vim.lsp.buf.code_action, desc = "Code action" },
-      { "<leader>f", vim.lsp.buf.format, desc = "Format" },
-      { "[d", vim.diagnostic.goto_prev, desc = "Previous diagnostic" },
-      { "]d", vim.diagnostic.goto_next, desc = "Next diagnostic" },
-      { "<leader>e", vim.diagnostic.open_float, desc = "Show diagnostic" },
+      { "gd",         vim.lsp.buf.definition,      desc = "Go to definition" },
+      { "gD",         vim.lsp.buf.declaration,     desc = "Go to declaration" },
+      { "gr",         vim.lsp.buf.references,      desc = "References" },
+      { "gi",         vim.lsp.buf.implementation,  desc = "Implementation" },
+      { "gt",         vim.lsp.buf.type_definition, desc = "Type definition" },
+      { "K",          vim.lsp.buf.hover,           desc = "Hover docs" },
+      { "<leader>rn", vim.lsp.buf.rename,          desc = "Rename" },
+      { "<leader>ca", vim.lsp.buf.code_action,     desc = "Code action" },
+      { "<leader>f",  vim.lsp.buf.format,          desc = "Format" },
+      { "[d",         vim.diagnostic.goto_prev,    desc = "Previous diagnostic" },
+      { "]d",         vim.diagnostic.goto_next,    desc = "Next diagnostic" },
+      { "<leader>e",  vim.diagnostic.open_float,   desc = "Show diagnostic" },
     },
     config = function()
       -- Diagnostics UI
@@ -209,14 +210,14 @@ return {
       })
 
       -- CMake
-      vim.lsp.config("cmake", {
-        cmd = { "cmake-language-server" },
-        filetypes = { "cmake" },
-        root_markers = { "CMakeLists.txt", ".git" },
-        init_options = { buildDirectory = "build" },
-        capabilities = capabilities,
-        handlers = handlers,
-      })
+      -- vim.lsp.config("cmake", {
+      --   cmd = { "cmake-language-server" },
+      --   filetypes = { "cmake" },
+      --   root_markers = { "CMakeLists.txt", ".git" },
+      --   init_options = { buildDirectory = "build" },
+      --   capabilities = capabilities,
+      --   handlers = handlers,
+      -- })
 
       -- Assembly
       if vim.fn.executable("asm-lsp") == 1 then
@@ -228,34 +229,35 @@ return {
         })
       end
 
-      -- C3 (manual install required)
-      if vim.fn.executable("c3lsp") == 1 then
-        vim.lsp.config("c3_lsp", {
-          cmd = { "c3lsp", "--stdio" },
-          filetypes = { "c3" },
-          root_markers = { "project.json", ".git" },
-          capabilities = capabilities,
-          handlers = handlers,
-        })
-      end
+      -- -- C3 (manual install required)
+      -- if vim.fn.executable("c3lsp") == 1 then
+      --   vim.lsp.config("c3_lsp", {
+      --     cmd = { "c3lsp", "--stdio" },
+      --     filetypes = { "c3" },
+      --     root_markers = { "project.json", ".git" },
+      --     capabilities = capabilities,
+      --     handlers = handlers,
+      --   })
+      -- end
 
       -- Auto-attach LSP to buffers
       vim.api.nvim_create_autocmd("FileType", {
-        pattern = { "c", "cpp", "objc", "objcpp", "cuda", "zig", "rust", "cmake", "asm", "c3" },
+        -- pattern = { "c", "cpp", "objc", "objcpp", "cuda", "zig", "rust", "cmake", "asm", "c3" },
+        pattern = { "c", "cpp", "objc", "objcpp", "cuda", "zig", "rust", "asm" },
         callback = function()
-          local ft = vim.bo.filetype
-          local server_name = ft == "c3" and "c3_lsp"
-            or ft == "cmake" and "cmake"
-            or (ft == "asm" or ft == "s" or ft == "S") and "asm_lsp"
-            or ft
-
-          vim.lsp.start({
-            name = server_name,
-            reuse_client = function(client, config)
-              return client.name == config.name
-                and vim.fs.dirname(client.config.root_dir) == vim.fs.dirname(config.root_dir)
-            end,
-          })
+          -- local ft = vim.bo.filetype
+          -- local server_name = ft == "c3" and "c3_lsp"
+          --     or ft == "cmake" and "cmake"
+          --     or (ft == "asm" or ft == "s" or ft == "S") and "asm_lsp"
+          --     or ft
+          --
+          -- vim.lsp.start({
+          --   name = server_name,
+          --   reuse_client = function(client, config)
+          --     return client.name == config.name
+          --         and vim.fs.dirname(client.config.root_dir) == vim.fs.dirname(config.root_dir)
+          --   end,
+          -- })
         end,
       })
 

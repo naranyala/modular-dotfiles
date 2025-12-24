@@ -468,4 +468,4 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
 
 -- vim.cmd.colorscheme("kanagawa")
-vim.cmd.colorscheme("onedark")
+-- vim.cmd.colorscheme("onedark")

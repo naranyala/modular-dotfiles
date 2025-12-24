@@ -1,16 +1,17 @@
+use anyhow::{Context, Result, bail};
 use clap::Parser;
-use std::path::{Path, PathBuf};
-use anyhow::{Result, bail, Context};
-use walkdir::WalkDir;
 use colored::*;
+use glob::glob;
+use std::path::{Path, PathBuf};
+use walkdir::WalkDir;
 
 #[derive(Parser)]
 #[command(name = "md2pdf")]
 #[command(about = "🚀 Convert Markdown → Beautiful PDF (powered by Typst)")]
 #[command(version, long_about = None)]
 struct Cli {
-    /// Input: markdown file or directory
-    path: PathBuf,
+    /// Input: markdown file, directory, or glob pattern (e.g., "./*.md")
+    path: String,
 
     /// Output directory (defaults to same as input)
     #[arg(short, long)]
@@ -24,17 +25,80 @@ struct Cli {
 fn main() -> Result<()> {
     let cli = Cli::parse();
 
-    let path = cli
-        .path
-        .canonicalize()
-        .with_context(|| format!("Failed to canonicalize path: {}", cli.path.display()))?;
-
-    if path.is_file() {
-        convert_file(&path, &cli.output, cli.force)?;
-    } else if path.is_dir() {
-        convert_directory(&path, &cli.output, cli.force)?;
+    // Check if it's a glob pattern
+    if cli.path.contains('*') || cli.path.contains('?') || cli.path.contains('[') {
+        convert_glob(&cli.path, &cli.output, cli.force)?;
     } else {
-        bail!("Path does not exist or is not accessible: {}", path.display());
+        // Try to canonicalize - it's either a file or directory
+        let path = PathBuf::from(&cli.path)
+            .canonicalize()
+            .with_context(|| format!("Failed to find path: {}", cli.path))?;
+
+        if path.is_file() {
+            convert_file(&path, &cli.output, cli.force)?;
+        } else if path.is_dir() {
+            convert_directory(&path, &cli.output, cli.force)?;
+        } else {
+            bail!(
+                "Path does not exist or is not accessible: {}",
+                path.display()
+            );
+        }
+    }
+
+    Ok(())
+}
+
+fn convert_glob(pattern: &str, output_dir: &Option<PathBuf>, force: bool) -> Result<()> {
+    let mut converted = 0;
+    let mut failed = 0;
+
+    let entries = glob(pattern).with_context(|| format!("Invalid glob pattern: {}", pattern))?;
+
+    for entry in entries {
+        match entry {
+            Ok(path) => {
+                if path.is_file() {
+                    if let Some(ext) = path.extension().and_then(|s| s.to_str()) {
+                        if ext == "md" {
+                            // Skip hidden and temporary files
+                            if let Some(name) = path.file_name().and_then(|s| s.to_str()) {
+                                if name.starts_with('.') || name.contains('~') {
+                                    continue;
+                                }
+                            }
+
+                            match convert_file(&path, output_dir, force) {
+                                Ok(()) => converted += 1,
+                                Err(e) => {
+                                    eprintln!("{} Failed {}: {}", "✗".red(), path.display(), e);
+                                    failed += 1;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            Err(e) => eprintln!("{} Glob error: {}", "⚠".yellow(), e),
+        }
+    }
+
+    if converted > 0 {
+        println!(
+            "\n{} Successfully converted {} file(s) from pattern '{}'",
+            "🎉".cyan(),
+            converted,
+            pattern
+        );
+        if failed > 0 {
+            println!("{} Failed to convert {} file(s)", "⚠".yellow(), failed);
+        }
+    } else {
+        println!(
+            "{} No matching markdown files found for pattern '{}'",
+            "ℹ".blue(),
+            pattern
+        );
     }
 
     Ok(())
@@ -44,7 +108,11 @@ fn convert_file(input: &Path, output_dir: &Option<PathBuf>, force: bool) -> Resu
     let output = get_output_path(input, output_dir);
 
     if output.exists() && !force {
-        println!("{} {} (use -f to overwrite)", "Skipping".yellow(), output.display());
+        println!(
+            "{} {} (use -f to overwrite)",
+            "Skipping".yellow(),
+            output.display()
+        );
         return Ok(());
     }
 
@@ -55,7 +123,6 @@ fn convert_file(input: &Path, output_dir: &Option<PathBuf>, force: bool) -> Resu
 
 fn convert_directory(dir: &Path, output_dir: &Option<PathBuf>, force: bool) -> Result<()> {
     let mut converted = 0;
-    let mut skipped = 0;
 
     for entry in WalkDir::new(dir)
         .max_depth(1)
@@ -73,7 +140,11 @@ fn convert_directory(dir: &Path, output_dir: &Option<PathBuf>, force: bool) -> R
                         }
                     } else {
                         // Filename not valid UTF-8 — skip
-                        eprintln!("{} Skipping file with non-UTF-8 name: {:?}", "⚠".yellow(), path);
+                        eprintln!(
+                            "{} Skipping file with non-UTF-8 name: {:?}",
+                            "⚠".yellow(),
+                            path
+                        );
                         continue;
                     }
 
@@ -87,9 +158,18 @@ fn convert_directory(dir: &Path, output_dir: &Option<PathBuf>, force: bool) -> R
     }
 
     if converted > 0 {
-        println!("\n{} Successfully converted {} file(s) in {}", "🎉".cyan(), converted, dir.display());
+        println!(
+            "\n{} Successfully converted {} file(s) in {}",
+            "🎉".cyan(),
+            converted,
+            dir.display()
+        );
     } else {
-        println!("{} No markdown files found in {}", "ℹ".blue(), dir.display());
+        println!(
+            "{} No markdown files found in {}",
+            "ℹ".blue(),
+            dir.display()
+        );
     }
 
     Ok(())
@@ -102,7 +182,9 @@ fn convert_process_file(path: &Path, output_dir: &Option<PathBuf>, force: bool) 
 }
 
 fn get_output_path(input: &Path, output_dir: &Option<PathBuf>) -> PathBuf {
-    let stem = input.file_stem().unwrap_or_else(|| std::ffi::OsStr::new("output"));
+    let stem = input
+        .file_stem()
+        .unwrap_or_else(|| std::ffi::OsStr::new("output"));
     let pdf_name = format!("{}.pdf", stem.to_string_lossy());
     match output_dir {
         Some(dir) => dir.join(pdf_name),

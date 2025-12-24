@@ -1,45 +1,40 @@
 
-# echo "> set deadline, make decision, take responsibility"
-# echo "> laki, kerja pake deadline, bukan perasaan"
-echo "> karimun jawa dan banda neira."
-echo "> siap sedia dan nyaman istirahatnya."
-echo "> it's already half done — make it pay off."
-echo "> no commits on weekends"
+export PATH="/c/D/dmd2/windows/bin64:$PATH"
+# export PATH="/c/D/dmd2/windows/bin:$PATH"
+export PATH="~/.bun/bin:$PATH"
 
-# eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+export PATH="/d/projects-remote/modular-dotfiles/.local/bin-c99:$PATH"
+export PATH="/d/projects-remote/modular-dotfiles/packages/cli_md2pdf/target/debug:$PATH"
+export PATH="/d/projects-remote/modular-dotfiles/packages/cli_mergepdf/target/debug:$PATH"
 
-export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+export PATH="/d/projects-remote/modular-dotfiles/packages/cprogramming:$PATH"
 
-export PATH="/usr/local/bin:$PATH"
-# export PATH="$HOME/.local/share/ponyup/bin:$PATH"
+export PATH="/d/diskd-binaries:$PATH"
+export PATH="/c/Users//Administrator/.bun/bin:$PATH"
 
-export PATH="/media/naranyala/Data1/diskd-binaries/flutter/bin:$PATH"
-export PATH="/run/media/naranyala/Data/diskd-binaries/flutter/bin:$PATH"
+export VCPKG_ROOT="/c/Tools/vcpkg"
+export PATH="$VCPKG_ROOT:$PATH"
+export PATH="/c/Users/Administrator/.local/bin:$PATH"
+export PATH="$PATH:/c/Program Files/dotnet"
 
+# export PATH="/c/Program\ Files/CMake/bin:$PATH"
+# alias cmake="/c/Program\ Files/CMake/bin/cmake.exe"
 
-export PATH="$HOME/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin:$PATH"
-
-export PATH="$HOME/.bun/bin:$PATH"
-
-# Created by `pipx` on 2025-07-15 16:10:52
-export PATH="$PATH:/home/naranyala/.local/bin"
-export PATH="$HOME/.cargo/bin:$PATH"
-export PKG_CONFIG_PATH=/path/to/pkgconfig:$PKG_CONFIG_PATH
-
-# eval /usr/bin/zsh
-# eval /home/linuxbrew/.linuxbrew/bin/nu
-
-# pnpm
-export PNPM_HOME="/home/naranyala/.local/share/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end
-export PATH="$PNPM_HOME:$PATH"
+alias win-term-new="wt -w 0  new-tab -p $(pwd)"
 
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+alias goto-1="cd $(dirnav.exe --nav 0)"
+alias goto-2="cd $(dirnav.exe --nav 1)"
+# alias goto-3="cd $(dirnav.exe --nav 2)"
+# alias goto-4="cd $(dirnav.exe --nav 3)"
+
+# alias mergepdf="bun /d/diskd-scripts/javascript/merge-all-pdf-in-specific-dir.js"
+alias mergepdf-cwd="bun /d/diskd-scripts/javascript/merge-all-pdf-in-current-dir.js"
+alias win-foxitpdf="/c/Program\ Files\ \(x86\)/Foxit\ Software/Foxit\ PDF\ Reader/FoxitPDFReader.exe"
+alias win-windirstat="/c/Program\ Files/WinDirStat/WinDirStat.exe"
+alias win-pdfxcview="/c/Program\ Files/Tracker\ Software/PDF\ Viewer/PDFXCview.exe"
+alias win-sumatrapdf="/c/Users/Administrator/AppData/Local/SumatraPDF/SumatraPDF.exe"
+
+
+# my bash config 
 

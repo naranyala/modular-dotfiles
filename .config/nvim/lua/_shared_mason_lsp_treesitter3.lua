@@ -7,7 +7,8 @@ return {
     dependencies = { "nvim-treesitter/nvim-treesitter-textobjects" },
     config = function()
       require("nvim-treesitter.configs").setup({
-        ensure_installed = { "c", "cpp", "rust", "zig", "bash", "make", "cmake", "lua", "toml", "json", "c3" },
+        -- ensure_installed = { "c", "cpp", "rust", "zig", "bash", "make", "cmake", "lua", "toml", "json", "c3" },
+        ensure_installed = { "c", "cpp", "rust", "zig", "bash", "make", "cmake", "lua", "toml", "json" },
         highlight = { enable = true },
         indent = { enable = true },
         incremental_selection = { enable = true },

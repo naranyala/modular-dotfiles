@@ -4,11 +4,11 @@
 
 -- require("setup_alt_001")
 -- require("setup_alt_002")
-require("setup_alt_003")
+-- require("setup_alt_003")
 
 -- require("setup_jsvue_mode") -- SOMETHING BROKEN
 -- require("setup_casm_mode") -- BEST
--- require("setup_crust_mode") -- SOMETHING BROKEN
+require("setup_crust_mode") -- SOMETHING BROKEN
 -- require("setup_bare_minimum")
 
 -- require("lib.gittutor").setup()
@@ -17,6 +17,7 @@ require("lib._sharedlib")
 require("lib.ok_features")
 require("lib.ok_vue_snippets")
 require("lib.ok_c99_snippets")
+require("lib.umka_as_c")
 
 -- require("lib_grepnav").setup()
 -- require("lib.simplenav")
