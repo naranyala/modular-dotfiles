@@ -6,9 +6,9 @@ packages/**/target
 packages/**/node_modules
 
 
-**/*/.deps
-**/*/.zig-cache
-**/*/.fingerprint
+**/.deps
+**/.zig-cache
+**/.fingerprint
 
 
 
