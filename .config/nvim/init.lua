@@ -6,9 +6,12 @@
 -- require("setup_alt_002")
 -- require("setup_alt_003")
 
+
+require("setup_crust_mode");
+-- require("setup_ultimate")
+
 -- require("setup_jsvue_mode") -- SOMETHING BROKEN
 -- require("setup_casm_mode") -- BEST
-require("setup_crust_mode") -- SOMETHING BROKEN
 -- require("setup_bare_minimum")
 
 -- require("lib.gittutor").setup()

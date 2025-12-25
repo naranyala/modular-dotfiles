@@ -1,0 +1,121 @@
+# --- Prefix Key ---
+unbind C-b
+set-option -g prefix C-Space
+set-option -g status-position top
+
+# set-option -g default-shell /usr/bin/zsh
+
+bind C-Space send-prefix
+
+# --- Window Index Starts at 1 ---
+set -g base-index 1
+setw -g pane-base-index 1
+set-option -g renumber-windows on
+
+# --- Enable Mouse Support ---
+set-option -g mouse on
+
+# --- More History Scrollback ---
+set -g history-limit 10000
+
+# --- Custom Window Format ---
+set-window-option -g window-status-format " #I:#W "
+set-window-option -g window-status-current-format " #I:#W* "
+
+# --- Status Bar Tweaks ---
+# set -g status-style "bg=#39FF14,fg=black"
+set -g status-bg white
+set -g status-fg black
+set -g status-left " #[bold][TMUX] "
+# set -g status-right " #[bold]%Y-%m-%d %H:%M #[bold][#H] "
+set -g status-right "#[bold] #S #[bold][menu] prefix+m "
+
+# --- Quick Reload Config ---
+bind r source-file ~/.tmux.conf; display-message " Config reloaded! "
+
+bind c new-window -c "#{pane_current_path}";
+
+bind | split-window -h -c "#{pane_current_path}"
+bind - split-window -v -c "#{pane_current_path}"
+
+bind Up switch-client -n   # Next session
+bind Down switch-client -p # Previous session
+bind Left previous-window
+bind Right next-window
+
+# Move between panes with arrow keys using Prefix
+# bind -n Up select-pane -U
+# bind -n Down select-pane -D
+# bind -n Left select-pane -L
+# bind -n Right select-pane -R
+#
+# # Switch session with Alt+Shift+Up/Down
+# bind -n M-S-Up next-session
+# bind -n M-S-Down previous-session
+#
+# # Switch window with Alt+Shift+Left/Right
+# bind -n M-S-Left previous-window
+# bind -n M-S-Right next-window
+
+
+# --- Smart Pane Navigation ---
+bind -n C-h select-pane -L
+bind -n C-j select-pane -D
+bind -n C-k select-pane -U
+bind -n C-l select-pane -R
+
+# --- Resize Panes ---
+bind -r < resize-pane -L 5
+bind -r > resize-pane -R 5
+bind -r + resize-pane -U 5
+bind -r - resize-pane -D 5
+
+# prefix+ctrl+m to display tmux popup
+bind-key m display-popup -w 65% -h 60% -E "bash -c '
+  choice=\$(printf \"%s\n\" \
+    \"switch-session\" \
+    \"new-session\" \
+    \"rename-session\" \
+    \"open-ranger\" \
+    \"view-keybindings\" \
+    \"system-monitor\" \
+    \"open-lazygit\" | fzf)
+
+  case \"\$choice\" in
+    \"switch-session\")
+      session=\$(tmux list-sessions -F \"#S\" | fzf)
+      [ -n \"\$session\" ] && tmux switch-client -t \"\$session\"
+      ;;
+    \"new-session\")
+      read -rp \"Enter new session name: \" newname
+      [ -n \"\$newname\" ] && tmux new-session -d -s \"\$newname\" && tmux switch-client -t \"\$newname\"
+      ;;
+    \"rename-session\")
+      current=\$(tmux display-message -p \"#S\")
+      read -rp \"Rename session '\$current' to: \" newname
+      [ -n \"\$newname\" ] && tmux rename-session -t \"\$current\" \"\$newname\"
+      ;;
+    \"open-ranger\")
+      ranger
+      ;;
+    \"view-keybindings\")
+      tmux list-keys | fzf
+      ;;
+    \"system-monitor\")
+      htop
+      ;;
+    \"open-lazygit\")
+      lazygit
+      ;;
+    \"save-session\")
+      session=$(tmux list-sessions -F "#S" | fzf)
+      [ -n "$session" ] && /run/media/naranyala/Data/projects-remote/modular-dotfiles/.local/bin-bash/tmux-save-windows-and-sessions.sh "$session"
+      ;;
+    \"restore-session\")
+      session=$(ls ~/.tmux-sessions | sed 's/.tmux//' | fzf)
+      [ -n "$session" ] && /run/media/naranyala/Data/projects-remote/modular-dotfiles/.local/bin-bash/tmux-restore-windows-and-sessions.sh "$session"
+      ;;
+  esac
+'"
+
+

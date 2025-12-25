@@ -1,0 +1,8 @@
+D:\projects-remote\modular-dotfiles\packages\crust_code\dirnav\../bin\release\deps\unicode_ident-7f7329ca8fe0dfcc.d: C:\Users\Administrator\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\unicode-ident-1.0.22\src\lib.rs C:\Users\Administrator\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\unicode-ident-1.0.22\src\tables.rs
+
+D:\projects-remote\modular-dotfiles\packages\crust_code\dirnav\../bin\release\deps\libunicode_ident-7f7329ca8fe0dfcc.rlib: C:\Users\Administrator\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\unicode-ident-1.0.22\src\lib.rs C:\Users\Administrator\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\unicode-ident-1.0.22\src\tables.rs
+
+D:\projects-remote\modular-dotfiles\packages\crust_code\dirnav\../bin\release\deps\libunicode_ident-7f7329ca8fe0dfcc.rmeta: C:\Users\Administrator\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\unicode-ident-1.0.22\src\lib.rs C:\Users\Administrator\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\unicode-ident-1.0.22\src\tables.rs
+
+C:\Users\Administrator\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\unicode-ident-1.0.22\src\lib.rs:
+C:\Users\Administrator\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\unicode-ident-1.0.22\src\tables.rs:

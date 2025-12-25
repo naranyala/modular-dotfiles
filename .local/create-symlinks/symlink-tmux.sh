@@ -1,7 +1,8 @@
 
 #!/usr/bin/bash
 
-DOT_PATH="/run/media/naranyala/Data/projects-remote/modular-dotfiles"
+# DOT_PATH="/run/media/naranyala/Data/projects-remote/modular-dotfiles"
+DOT_PATH="/d/projects-remote/modular-dotfiles"
 
 target="$HOME/.tmux.conf"
 source="$DOT_PATH/.tmux.conf"

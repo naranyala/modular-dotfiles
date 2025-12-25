@@ -4,7 +4,9 @@ return {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
     event = "BufReadPre",
-    dependencies = { "nvim-treesitter/nvim-treesitter-textobjects" },
+    dependencies = { 
+      -- "nvim-treesitter/nvim-treesitter-textobjects" 
+  },
     config = function()
       require("nvim-treesitter.configs").setup({
         -- ensure_installed = { "c", "cpp", "rust", "zig", "bash", "make", "cmake", "lua", "toml", "json", "c3" },
