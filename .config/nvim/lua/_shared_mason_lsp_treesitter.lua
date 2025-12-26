@@ -55,7 +55,7 @@ return {
         "zig", "rust", "asm",
 
         -- Build systems & scripting
-        "bash", "make", 
+        "bash", "make",
         -- "cmake", "meson",
 
         -- Embedded/Kernel
@@ -88,7 +88,7 @@ return {
       },
     },
     config = function(_, opts)
-      require("nvim-treesitter.configs").setup(opts)
+      -- require("nvim-treesitter.configs").setup(opts)
 
       -- -- C3 external grammar (not in default registry)
       -- local parser_config = require("nvim-treesitter.parsers").get_parser_configs()

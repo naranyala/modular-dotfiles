@@ -1,6 +1,7 @@
 #!/usr/bin/bash
 
-DOT_PATH="$HOME/projects-remote/modular-dotfiles"
+# DOT_PATH="$HOME/projects-remote/modular-dotfiles"
+DOT_PATH="$HOME/projects-remote/naranyala-dotfiles"
 
 target="$HOME/.bashrc"
 source="$DOT_PATH/.bashrc"

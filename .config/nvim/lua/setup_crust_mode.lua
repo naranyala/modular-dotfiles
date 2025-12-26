@@ -466,6 +466,37 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
 
 
+-- Put this in your init.lua or single-file config
+vim.g.rustaceanvim = {
+  server = {
+    root_dir = function(fname)
+      -- climb up until we find Cargo.toml or .git
+      local dir = vim.fn.fnamemodify(fname, ":p:h")
+      while dir ~= "" do
+        if vim.fn.filereadable(dir .. "/Cargo.toml") == 1
+           or vim.fn.isdirectory(dir .. "/.git") == 1 then
+          return dir
+        end
+        local parent = vim.fn.fnamemodify(dir, ":h")
+        if parent == dir then break end
+        dir = parent
+      end
+      -- fallback: just use the file’s directory
+      return vim.fn.fnamemodify(fname, ":p:h")
+    end,
+  },
+}
+
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "rust",
+  callback = function()
+    if vim.fn.findfile("Cargo.toml", ".;") == "" then
+      vim.b.rustaceanvim_enabled = false
+    end
+  end,
+})
+
 
 -- vim.cmd.colorscheme("kanagawa")
 -- vim.cmd.colorscheme("onedark")
