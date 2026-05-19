@@ -102,3 +102,9 @@ end, { desc = "Delete markdown images directly" })
 -- vim.wo.signcolumn = "no"
 -- vim.wo.foldcolumn = "0"
 -- vim.o.fillchars = "vert: "
+
+
+vim.diagnostic.config({
+  underline = false,
+  virtual_text = true, -- Or false to hide text too
+})

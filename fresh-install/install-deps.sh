@@ -24,6 +24,10 @@ echo "✅ Using $PKG_MANAGER package manager..."
 
 # Unified package list
 PACKAGES=(
+    meson ninja-build
+
+    hx
+
     btop neovim fastfetch bat git
     fzf ripgrep
     chromium

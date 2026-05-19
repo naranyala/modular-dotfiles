@@ -111,5 +111,8 @@ case "${1:-all}" in
     *)    echo "Usage: $0 [rust|zig|all]"; exit 1 ;;
 esac
 
+rustup target add stable
+rustup target add wasm32-unknown-unknown
+
 echo "🎉 Installation complete!"
 

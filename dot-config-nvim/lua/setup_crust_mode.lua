@@ -151,25 +151,25 @@ require("lazy").setup({
 	--
 
 	-- Rust specific enhancements
-	{
-		"mrcjkb/rustaceanvim",
-		version = "^6",
-		ft = { "rust" },
-		config = function()
-			vim.g.rustaceanvim = {
-				server = {
-					on_attach = function(_, bufnr)
-						vim.keymap.set("n", "<leader>ca", function()
-							vim.cmd.RustLsp("codeAction")
-						end, { buffer = bufnr, desc = "Code Action" })
-						vim.keymap.set("n", "K", function()
-							vim.cmd.RustLsp({ "hover", "actions" })
-						end, { buffer = bufnr, desc = "Hover Actions" })
-					end,
-				},
-			}
-		end,
-	},
+	-- {
+	-- 	"mrcjkb/rustaceanvim",
+	-- 	version = "^6",
+	-- 	ft = { "rust" },
+	-- 	config = function()
+	-- 		vim.g.rustaceanvim = {
+	-- 			server = {
+	-- 				on_attach = function(_, bufnr)
+	-- 					vim.keymap.set("n", "<leader>ca", function()
+	-- 						vim.cmd.RustLsp("codeAction")
+	-- 					end, { buffer = bufnr, desc = "Code Action" })
+	-- 					vim.keymap.set("n", "K", function()
+	-- 						vim.cmd.RustLsp({ "hover", "actions" })
+	-- 					end, { buffer = bufnr, desc = "Hover Actions" })
+	-- 				end,
+	-- 			},
+	-- 		}
+	-- 	end,
+	-- },
 
 	-- C/C++ specific enhancements
 	{
@@ -462,26 +462,26 @@ vim.api.nvim_create_autocmd("LspAttach", {
 })
 
 -- Put this in your init.lua or single-file config
-vim.g.rustaceanvim = {
-	server = {
-		root_dir = function(fname)
-			-- climb up until we find Cargo.toml or .git
-			local dir = vim.fn.fnamemodify(fname, ":p:h")
-			while dir ~= "" do
-				if vim.fn.filereadable(dir .. "/Cargo.toml") == 1 or vim.fn.isdirectory(dir .. "/.git") == 1 then
-					return dir
-				end
-				local parent = vim.fn.fnamemodify(dir, ":h")
-				if parent == dir then
-					break
-				end
-				dir = parent
-			end
-			-- fallback: just use the file’s directory
-			return vim.fn.fnamemodify(fname, ":p:h")
-		end,
-	},
-}
+-- vim.g.rustaceanvim = {
+-- 	server = {
+-- 		root_dir = function(fname)
+-- 			-- climb up until we find Cargo.toml or .git
+-- 			local dir = vim.fn.fnamemodify(fname, ":p:h")
+-- 			while dir ~= "" do
+-- 				if vim.fn.filereadable(dir .. "/Cargo.toml") == 1 or vim.fn.isdirectory(dir .. "/.git") == 1 then
+-- 					return dir
+-- 				end
+-- 				local parent = vim.fn.fnamemodify(dir, ":h")
+-- 				if parent == dir then
+-- 					break
+-- 				end
+-- 				dir = parent
+-- 			end
+-- 			-- fallback: just use the file’s directory
+-- 			return vim.fn.fnamemodify(fname, ":p:h")
+-- 		end,
+-- 	},
+-- }
 
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = "rust",
