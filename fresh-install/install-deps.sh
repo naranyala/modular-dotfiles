@@ -26,6 +26,7 @@ echo "✅ Using $PKG_MANAGER package manager..."
 PACKAGES=(
     meson ninja-build
 
+    fonts-crosextra-carlito
     hx
 
     btop neovim fastfetch bat git
@@ -84,6 +85,10 @@ install_packages() {
         done
     fi
 }
+
+
+## snap install
+sudo snap install copilot-cli
 
 install_packages
 echo "🎉 Installation complete!"
