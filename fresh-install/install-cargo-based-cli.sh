@@ -17,6 +17,7 @@ fi
 
 # List of cargo-based utilities to install
 CARGO_PACKAGES=(
+  "skim --locked"
   "jj --locked --bin jj jj-cli"        # Jujutsu VCS
   "ripgrep --locked"                   # Fast grep alternative
   "exa --locked"                       # Modern ls replacement

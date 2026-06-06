@@ -25,9 +25,13 @@ echo "✅ Using $PKG_MANAGER package manager..."
 # Unified package list
 PACKAGES=(
     meson ninja-build
+    mingw-w64 lld
 
     fonts-crosextra-carlito
     hx
+    net-tools
+
+    tealdeer clang
 
     btop neovim fastfetch bat git
     fzf ripgrep
