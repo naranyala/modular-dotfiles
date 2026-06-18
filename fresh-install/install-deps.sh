@@ -26,7 +26,10 @@ echo "✅ Using $PKG_MANAGER package manager..."
 PACKAGES=(
     meson ninja-build
     mingw-w64 lld
+    sqlite3
 
+    golang-golang-x-tools
+    libimage-exiftool-perl
     fonts-crosextra-carlito
     hx
     net-tools
