@@ -27,6 +27,9 @@ PACKAGES=(
     meson ninja-build
     mingw-w64 lld
     sqlite3
+    tesseract-ocr tesseract-ocr-jpn tesseract-ocr-jpn-vert tesseract-ocr-eng
+    libvips-dev libmecab-dev mecab-ipadic-utf8 libtree-sitter-dev
+    libmupdf-dev libtesseract-dev libleptonica-dev libwebp-dev
 
     golang-golang-x-tools
     libimage-exiftool-perl
