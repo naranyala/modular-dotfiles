@@ -31,6 +31,18 @@ PACKAGES=(
     libvips-dev libmecab-dev mecab-ipadic-utf8 libtree-sitter-dev
     libmupdf-dev libtesseract-dev libleptonica-dev libwebp-dev
 
+    sudo apt install wlr-randr swappy gammastep crudini wtype wireguard-tools light
+    # cargo install satty
+    inotify-tools playerctl mako-notifier policykit-1-gnome
+    fluid-soundfont-gm  fluid-soundfont-gs  vulkan-tools
+
+    libinput-tools
+    libgtk-layer-shell-dev
+    libdbusmenu-gtk3-dev pkg-config
+
+    libwlroots-0.19-dev
+    libappindicator3-dev
+    network-manager-gnome
     golang-golang-x-tools
     libimage-exiftool-perl
     fonts-crosextra-carlito
